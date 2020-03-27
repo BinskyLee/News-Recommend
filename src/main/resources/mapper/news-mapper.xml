@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fzu.recommend.dao.NewsMapper">
+
+    <sql id="selectFields">
+        id, user_id, title, content, category_id, key_words, create_time, comment_count, click_count, score
+    </sql>
+
+    <select id="selectNews" resultType="News">
+        select <include refid="selectFields"></include>
+        from news
+        <if test = "userId != 0">
+            where user_id = #{userId}
+        </if>
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectNewsRows" resultType="int">
+        select count(id)
+        from news
+        <if test = "userId != 0">
+            where user_id = #{userId}
+        </if>
+    </select>
+
+
+</mapper>
