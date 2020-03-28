@@ -1,6 +1,8 @@
 package com.fzu.recommend.service;
 
+import com.fzu.recommend.dao.LoginTicketMapper;
 import com.fzu.recommend.dao.UserMapper;
+import com.fzu.recommend.entity.LoginTicket;
 import com.fzu.recommend.entity.User;
 import com.fzu.recommend.util.MailClient;
 import com.fzu.recommend.util.RecommendUtil;
@@ -27,6 +29,9 @@ public class UserService implements RecommendConstant{
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
 
     @Value("${recommend.path.domain}")
     private String domain;
@@ -67,7 +72,7 @@ public class UserService implements RecommendConstant{
         //激活邮件
         Context context = new Context();
         context.setVariable("username", user.getUsername());
-        String url = domain + contextPath + "activation/" + user.getId() + "/" + user.getActivationCode();
+        String url = domain + contextPath + "/activation/" + user.getId() + "/" + user.getActivationCode();
         context.setVariable("url", url);
         String content = templateEngine.process("/mail/activation", context);
         mailClient.sendMail(user.getEmail(), "验证电子邮箱", content);
@@ -85,6 +90,25 @@ public class UserService implements RecommendConstant{
         }else{
             return ACTIVATION_FAILURE;
         }
+    }
+
+    public String login(String email, String password, int expiredSeconds){
+        User user = userMapper.selectByEmail(email);
+        if(user == null){
+            return null;
+        }
+        password = RecommendUtil.md5(password + user.getSalt());
+        if(!user.getPassword().equals(password)){
+            return null;
+        }
+        //生成登陆凭证
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(user.getId());
+        loginTicket.setTicket(RecommendUtil.generateUUID());
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+        return loginTicket.getTicket();
     }
 
 }

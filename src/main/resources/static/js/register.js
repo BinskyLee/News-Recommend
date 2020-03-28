@@ -1,3 +1,4 @@
+var CONTEXT_PATH = "/recommend";
 $(function(){
 	$("form").submit(check_data);
 	$("input").focus(clear_error);
@@ -15,7 +16,7 @@ function check_email() {
 		$.ajax({
 			async:false,
 			type:"POST",
-			url:"/check/email",
+			url:CONTEXT_PATH + "/check/email",
 			data:"email="+email,
 			dataType:"json",
 			complete:function(result){
@@ -25,7 +26,7 @@ function check_email() {
 					flag = true;
 				}
 			}
-		})
+		});
 		if(flag){
 			return false;
 		}else{
@@ -53,7 +54,7 @@ function check_username() {
 		$.ajax({
 			async:false,
 			type:"POST",
-			url:"/check/username",
+			url:CONTEXT_PATH + "/check/username",
 			data:"username="+username,
 			dataType:"json",
 			complete:function(result){
@@ -100,7 +101,10 @@ function check_password() {
 function check_confirm() {
 	var pwd1 = $("#password").val();
 	var pwd2 = $("#confirm-password").val();
-	if(pwd1 != pwd2) {
+	if(pwd2.length == 0 || pwd2 == ""){
+		$("#confirm-password").addClass("is-invalid");
+		$("#invalid-confirm").text("确认密码不能为空");
+	}else if(pwd1 != pwd2) {
 		$("#confirm-password").addClass("is-invalid");
 		$("#invalid-confirm").text("两次输入密码不一致");
 		return false;
@@ -109,19 +113,16 @@ function check_confirm() {
 }
 
 function check_data() {
-	if(!check_username()){
+	var f1, f2, f3, f4;
+	f1 = check_email();
+	f2 = check_username();
+	f3 = check_password();
+	f4 = check_confirm();
+	if(f1 && f2 && f3 && f4){
+		return true;
+	}else{
 		return false;
 	}
-	if(!check_email()){
-		return false;
-	}
-	if(!check_password()){
-		return false;
-	}
-	if(!check_confirm()){
-		return false;
-	}
-	return true;
 }
 function clear_error() {
 	$(this).removeClass("is-invalid");

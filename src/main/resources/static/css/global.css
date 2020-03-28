@@ -9,6 +9,11 @@ body {
 	height: 100%;
 }
 
+a:hover{
+	color: #fd4c5b;
+
+}
+
 .my-container {
 	position: relative;
 	height: auto;
