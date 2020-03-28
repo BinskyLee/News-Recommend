@@ -67,11 +67,6 @@ footer .company-info li {
 	margin: 4px 0;
 }
 
-
-.main .container {
-	background: #fff;
-}
-
 i {
 	font-style: normal;
 }
@@ -192,7 +187,7 @@ em {
 }
 
 .navbar .navbar-collapse .form-inline >input:focus{
-	border-color: #ced4da;
+	border-color: #888888;
 	webkit-box-shadow:none;
 	box-shadow:none;
 
