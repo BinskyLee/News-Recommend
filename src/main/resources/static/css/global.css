@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	/*background: #eee;*/
+	background: #ffffff;
 	font-family: arial, STHeiti, 'Microsoft YaHei', \5b8b\4f53;
 	font-size: 14px;
 	height: 100%;
@@ -27,18 +27,23 @@ a:hover{
 
 .my-button{
 	background: #fd4c5b;
-	border-color: #fd4c5b;
 }
-
-.glyphicon-color{
-	color: #ffffff;
-	font-weight: bold;
-}
-
 .my-button:hover{
 	background: #EB4556;
-	border-color: #EB4556;
 }
+
+.my-button:focus{
+	border: none;
+	background-color: #fd4c5b;
+	webkit-box-shadow:none;
+	box-shadow:none;
+}
+
+
+.font-color{
+	color: #fd4c5b;
+}
+
 
 header .navbar {
 	padding: 5px 0;
@@ -51,37 +56,9 @@ header .badge {
 	left: 33px;
 }
 
-footer {
-	padding: 20px 0;
-	font-size: 12px;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
-
-footer .qrcode {
-	text-align: center;
-}
-
-footer .detail-info{
-	border-left: 1px solid #888;
-}
-
-footer .company-info li {
-	padding-left: 16px;
-	margin: 4px 0;
-}
 
 i {
 	font-style: normal;
-}
-
-u {
-	text-decoration: none;
-}
-
-b {
-	font-weight: normal;
 }
 
 a {
@@ -177,6 +154,7 @@ em {
 .btn-main:hover{
 	background: #EB4556;
 	border-color: #EB4556;
+	color: white;
 }
 
 .navbar .navbar-collapse .navbar-nav >li > a{
@@ -195,7 +173,22 @@ em {
 	border-color: #888888;
 	webkit-box-shadow:none;
 	box-shadow:none;
+}
 
+.avatar-holder{
+	border-radius: 25px;
+	height: 25px;
+	width: 25px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.avatar-holder .avatar-img{
+	height: 25px;
+	width: 25px;
+	border: none;
+	vertical-align: middle;
 }
 
 .side-bar{
@@ -208,7 +201,7 @@ em {
 	margin-bottom: 5px;
 	font-weight: bold;
 	text-align: center;
-	height:42px;
+	height:43px;
 	border-radius: 5px;
 }
 
@@ -220,6 +213,10 @@ em {
 .side-bar .list-group-item:hover{
 	background: #fd4c5b;
 	color: #ffffff;
+}
+
+.content-box{
+	padding: 35px 20px;
 }
 
 .sort-name .dropdown-toggle{
@@ -240,16 +237,19 @@ em {
 	box-shadow:none;
 }
 
-.sort-name .dropdown-menu .dropdown-item{
+.dropdown .dropdown-menu{
+	min-width: 30px;
+}
+.dropdown-menu .dropdown-item{
 	font-size: 14px;
 }
 
-.sort-name .dropdown-menu .dropdown-item:hover{
+.dropdown-menu .dropdown-item:hover{
 	background:#ffffff;
 	color: #fd4c5b;
 }
 
-.sort-name .dropdown-menu .dropdown-item:active{
+.dropdown-menu .dropdown-item:active{
 	background: #ffffff;
 }
 
@@ -276,6 +276,8 @@ em {
 	vertical-align: middle;
 }
 .article-info-bar .up-content .face-holder .face-img{
+	height: 20px;
+	width: 20px;
 	border: none;
 	vertical-align: middle;
 }
@@ -293,9 +295,9 @@ em {
 }
 
 .side-bar-card{
-	padding-left: 20px;
 	position: sticky;
 	top:90px;
+	padding-left: 13px;
 }
 
 .side-bar-card .card-title{
@@ -316,7 +318,6 @@ em {
 	list-style: none;
 	padding: 10px 10px;
 	margin: 0px;
-
 }
 
 .side-bar-card .rank-index{

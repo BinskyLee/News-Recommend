@@ -7,15 +7,16 @@ import com.fzu.recommend.entity.User;
 import com.fzu.recommend.util.MailClient;
 import com.fzu.recommend.util.RecommendUtil;
 import com.fzu.recommend.util.RecommendConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Date;
-import java.util.Random;
-
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -55,10 +56,27 @@ public class UserService implements RecommendConstant{
         return false;
     }
 
-    public void register(User user){
+    public Map<String, Object> register(User user){
+        Map<String, Object> map = new HashMap<>();
         //空值处理
         if(user == null){
             throw new IllegalArgumentException("参数不能为空");
+        }
+        if(StringUtils.isBlank(user.getEmail()) || StringUtils.isBlank(user.getUsername())
+            || StringUtils.isBlank(user.getPassword())){
+            map.put("msg", "参数不能为空");
+            return map;
+        }
+        //正则处理
+        String regEmail = "^([a-z0-9A-Z]+[-|\\\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\\\.)+[a-zA-Z]{2,}$";
+        String regName = "^[\\u4e00-\\u9fa5_a-zA-Z0-9]{2,16}$";
+        String regPwd = "^\\w{6,20}$";
+        Matcher emailMatcher = Pattern.compile(regEmail).matcher(user.getEmail());
+        Matcher nameMatcher = Pattern.compile(regName).matcher(user.getUsername());
+        Matcher pwdMatcher = Pattern.compile(regPwd).matcher(user.getPassword());
+        if(!emailMatcher.matches() || !nameMatcher.matches() || !pwdMatcher.matches()){
+            map.put("msg", "参数错误");
+            return map;
         }
         //添加用户
         user.setSalt(RecommendUtil.generateUUID().substring(0, 5));
@@ -76,6 +94,7 @@ public class UserService implements RecommendConstant{
         context.setVariable("url", url);
         String content = templateEngine.process("/mail/activation", context);
         mailClient.sendMail(user.getEmail(), "验证电子邮箱", content);
+        return map;
     }
 
     public int activation(int userId, String code){
@@ -92,23 +111,63 @@ public class UserService implements RecommendConstant{
         }
     }
 
-    public String login(String email, String password, int expiredSeconds){
+    public Map<String, Object> login(String email, String password, int expiredSeconds){
+        Map<String, Object> map = new HashMap<>();
+        //空值处理
+        if(StringUtils.isBlank(email) || StringUtils.isBlank(password)){
+            map.put("msg", "参数不能为空");
+            return map;
+        }
         User user = userMapper.selectByEmail(email);
         if(user == null){
-            return null;
+            map.put("msg", "用户不存在");
+            return map;
+        }
+        if(user.getStatus() == 0){
+            map.put("msg", "帐号未激活");
+            return map;
         }
         password = RecommendUtil.md5(password + user.getSalt());
         if(!user.getPassword().equals(password)){
-            return null;
+            map.put("msg", "密码错误");
+            return map;
         }
         //生成登陆凭证
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(user.getId());
         loginTicket.setTicket(RecommendUtil.generateUUID());
         loginTicket.setStatus(0);
-        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        now.add(Calendar.SECOND, expiredSeconds);
+        loginTicket.setExpired(now.getTime());
         loginTicketMapper.insertLoginTicket(loginTicket);
-        return loginTicket.getTicket();
+        map.put("ticket", loginTicket.getTicket());
+        return map;
     }
 
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    public void logout(String ticket){
+        loginTicketMapper.updateStatus(ticket, 1);
+    }
+
+    public int updateHeader(int userId, String headerUrl){
+        return userMapper.updateHeader(userId, headerUrl);
+    }
+
+    public boolean updatePassword(User user, String oldPassword, String newPassword){
+        //空值判断
+        if(user == null || StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword)){
+            return false;
+        }
+        if(RecommendUtil.md5(oldPassword + user.getSalt()).equals(user.getPassword())){
+            userMapper.updatePassword(user.getId(),RecommendUtil.md5(newPassword + user.getSalt()));
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

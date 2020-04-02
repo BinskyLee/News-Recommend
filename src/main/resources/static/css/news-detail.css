@@ -1,0 +1,108 @@
+.content {
+	font-size: 16px;
+	line-height: 2em;
+}
+
+.replyform textarea {
+	width: 90%;
+	height: 90px;
+	font-size: 12px;
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: rgb(244, 245, 247);
+	color: rgb(85, 85, 85);
+	line-height: normal;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(229, 233, 239);
+	border-image: initial;
+	overflow: auto;
+	border-radius: 4px;
+	transition: all 0s ease 0s;
+	padding: 5px 10px;
+}
+
+.replyform textarea:hover, .replyform textarea:focus{
+	outline:none; !important;
+	background-color: #fff;
+	border-color: #fd4c5b;
+}
+
+
+
+.input-size {
+	width: 100%;
+	height: 35px;
+}
+
+.list-style{
+	padding: 0 20px;
+	list-style: none;
+	width: 100%;
+}
+
+.content-box .news-title{
+	font-size: 28px;
+	color: #222;
+	font-weight: 700;
+	line-height: 1.4;
+}
+.list-style .media .media-body .user .name{
+	color: #6d757a;
+	font-weight: bold;
+	font-size: 12px;
+}
+.list-style .media .media-body .user .name:hover{
+	color: #fd4c5b;
+}
+
+.reply-face{
+	width: 25px;
+	height: 25px;
+
+}
+
+.reply-info >ul >li >a{
+	color: #777;
+}
+.reply-info >ul >li >a:hover{
+	color: #fd4c5b;
+}
+
+.side-bar-card .up-operate .operate-btn{
+	width: 100px;
+	height: 32px;
+	line-height: 32px;
+	margin-left: 15px;
+	background-color: #fd4c5b;
+	border: 1px solid #fd4c5b;
+	border-radius: 4px;
+	color: #fff;
+	display: inline-block;
+	text-align: center;
+	font-size: 12px;
+	transition: .3s;
+	box-sizing: border-box;
+}
+.side-bar-card .up-operate .operate-btn:hover {
+	background-color: #EB4556;
+	border-color: #EB4556;
+	cursor: pointer;
+}
+
+.side-bar-card .up-article-list-block .block-title{
+	font-size: 18px;
+	color: #222;
+	padding-bottom: 10px;
+}
+
+.side-bar-card .article-list{
+	padding: 0;
+}
+
+.side-bar-card .article-list .item {
+	list-style: none;
+	padding: 3px 0;
+	margin: 0px;
+	font-size: 12px;
+}

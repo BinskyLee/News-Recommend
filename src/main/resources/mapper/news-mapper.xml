@@ -8,6 +8,10 @@
         id, user_id, title, content, category_id, key_words, create_time, comment_count, click_count, score
     </sql>
 
+    <sql id="insertFields">
+        user_id, title, content, category_id, key_words, create_time, comment_count, click_count, score
+    </sql>
+
     <select id="selectNews" resultType="News">
         select <include refid="selectFields"></include>
         from news
@@ -25,6 +29,12 @@
             where user_id = #{userId}
         </if>
     </select>
+
+
+    <insert id="insertNews" parameterType="News">
+        insert into news (<include refid="insertFields"></include>)
+        value (#{userId}, #{title}, #{content}, #{categoryId}, #{keyWords}, #{createTime}, #{commentCount}, #{clickCount}, #{score})
+    </insert>
 
 
 </mapper>

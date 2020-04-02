@@ -15,6 +15,7 @@ public interface NewsMapper {
     //如果只有一个参数，并且要使用动态条件，则必须用别名
     int selectNewsRows(@Param("userId") int userId);
 
+    int insertNews(News news);
 
 
 
