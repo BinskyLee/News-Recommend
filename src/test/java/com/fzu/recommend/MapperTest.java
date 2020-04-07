@@ -1,11 +1,8 @@
 package com.fzu.recommend;
 
-import com.fzu.recommend.dao.LoginTicketMapper;
-import com.fzu.recommend.dao.NewsMapper;
-import com.fzu.recommend.dao.UserMapper;
-import com.fzu.recommend.entity.LoginTicket;
-import com.fzu.recommend.entity.News;
-import com.fzu.recommend.entity.User;
+import com.fzu.recommend.dao.*;
+import com.fzu.recommend.entity.*;
+import com.fzu.recommend.util.RecommendConstant;
 import com.fzu.recommend.util.RecommendUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = RecommendApplication.class)
-public class MapperTest {
+public class MapperTest implements RecommendConstant {
 
     @Autowired
     private UserMapper userMapper;
@@ -30,6 +28,12 @@ public class MapperTest {
 
     @Autowired
     private LoginTicketMapper loginTicketMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Test
     public void testSelectUser(){
@@ -97,5 +101,61 @@ public class MapperTest {
         loginTicketMapper.updateStatus("b47610ed403a4b02a355e01ff1c73b79", 1);
     }
 
+    @Test
+    public void testInsertComment(){
+        Comment comment = new Comment();
+        comment.setUserId(33);
+        comment.setCreateTime(new Date());
+        comment.setEntityType(ENTITY_TYPE_COMMENT);
+        comment.setEntityId(1);
+        comment.setContent("测试回复");
+        commentMapper.insertComment(comment);
+    }
+
+    @Test
+    public void testSelectCommentsByEntity(){
+        List<Comment> comments = commentMapper.selectCommentsByEntity(2, 1, 0, 5);
+        System.out.println(comments);
+    }
+
+    @Test
+    public void testSelectCountByEntity(){
+        int count = commentMapper.selectCountByEntity(2, 1);
+        System.out.println(count);
+    }
+
+    @Test
+    public void testSelectNewsById(){
+        News news = newsMapper.selectNewsById(15);
+        System.out.println(news);
+    }
+
+    @Test
+    public void testInsertMessage(){
+        Message message = new Message();
+        for(int i = 1; i <= 10; i++) {
+            message.setFromId(22);
+            message.setToId(33);
+            message.setContent("测试私信" + i);
+            message.setConversationId("22_33");
+            message.setCreateTime(new Date());
+            message.setStatus(0);
+            messageMapper.insertMessage(message);
+        }
+
+    }
+    @Test
+    public void testSelectMessage(){
+        System.out.println(messageMapper.selectConversationCount(33));
+        System.out.println(messageMapper.selectLetterCount("22_33"));
+        System.out.println(messageMapper.selectConversations(33, 0, 5));
+        System.out.println(messageMapper.selectLetters("22_33", 0, 5));
+        System.out.println(messageMapper.selectLetterUnreadCount(33, null ));
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        messageMapper.updateStatus(ids, 1);
+
+    }
 
 }

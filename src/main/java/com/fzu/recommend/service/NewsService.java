@@ -45,4 +45,15 @@ public class NewsService {
         return null;
     }
 
+
+    public News findNewsById(int id){
+        return newsMapper.selectNewsById(id);
+    }
+
+    public int updateCommentCount(int id, int commentCount){
+        return newsMapper.updateCommentCount(id, commentCount);
+    }
+
+
+
 }

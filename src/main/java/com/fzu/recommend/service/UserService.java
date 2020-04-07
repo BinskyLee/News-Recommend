@@ -170,4 +170,8 @@ public class UserService implements RecommendConstant{
             return false;
         }
     }
+
+    public User findUserByName(String username){
+        return userMapper.selectByName(username);
+    }
 }

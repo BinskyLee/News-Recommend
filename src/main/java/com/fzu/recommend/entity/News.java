@@ -8,7 +8,7 @@ public class News {
     private String title;
     private String content;
     private int categoryId;
-    private String keyWords;
+    private String keywords;
     private Date createTime;
     private int commentCount;
     private int clickCount;
@@ -54,12 +54,12 @@ public class News {
         this.categoryId = categoryId;
     }
 
-    public String getKeyWords() {
-        return keyWords;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public Date getCreateTime() {
@@ -102,7 +102,7 @@ public class News {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", categoryId=" + categoryId +
-                ", keyWords='" + keyWords + '\'' +
+                ", keyWords='" + keywords + '\'' +
                 ", createTime=" + createTime +
                 ", commentCount=" + commentCount +
                 ", clickCount=" + clickCount +

@@ -62,14 +62,7 @@
 
 }
 
-.reply-info >ul >li >a{
-	color: #777;
-}
-.reply-info >ul >li >a:hover{
-	color: #fd4c5b;
-}
-
-.side-bar-card .up-operate .operate-btn{
+.side-bar-card .up-operate .operate-btn , .article-info .comment-btn .operate-btn{
 	width: 100px;
 	height: 32px;
 	line-height: 32px;
@@ -83,11 +76,15 @@
 	font-size: 12px;
 	transition: .3s;
 	box-sizing: border-box;
+	font-weight: 600;
 }
-.side-bar-card .up-operate .operate-btn:hover {
+.side-bar-card .up-operate .operate-btn:hover , .article-info .comment-btn .operate-btn:hover{
 	background-color: #EB4556;
 	border-color: #EB4556;
 	cursor: pointer;
+}
+.side-bar-card .up-operate .operate-btn:hover , .article-info .comment-btn .operate-btn:focus{
+	outline: none;
 }
 
 .side-bar-card .up-article-list-block .block-title{
@@ -105,4 +102,116 @@
 	padding: 3px 0;
 	margin: 0px;
 	font-size: 12px;
+}
+
+.content-box .content >p >img{
+	width: 100%; !important;
+}
+
+.reply-others{
+	color: #00a1d6;
+}
+.reply-others:hover{
+	color: #fd4c5b;
+}
+
+.reply-input{
+	border: 1px solid #e5e5e5;
+	padding: 8px 10px;
+	height: 30px;
+	line-height: 14px;
+	border-radius: 3px 0 0 3px;
+	width: 373px;
+	vertical-align: top;
+	color: rgb(85, 85, 85);
+	box-sizing: border-box;
+}
+
+.reply-input:focus{
+	outline: none;
+}
+
+.paging-box{
+	font-size: 12px;
+}
+
+.paging-box .result{
+	padding-right: 10px;
+}
+.paging-box >a {
+	color: #222;
+	cursor: pointer;
+	text-align: center;
+	margin: 0 4px;
+	text-decoration: none;
+	line-height: 26px;
+}
+
+.paging-box >a:hover{
+	color: #fd4c5b;
+}
+
+.paging-box .current {
+	color: #fd4c5b;
+	font-weight: 700;
+}
+
+.article-info{
+	color: #757575;
+	font-size: 16px;
+}
+
+.article-info .comment-count-block{
+	font-size: 18px;
+	line-height: 24px;
+	color: #222;
+}
+
+.article-info .fav-btn, .article-info .like-btn{
+	cursor: pointer;
+	display: inline-block;
+	width: 80px;
+	height: 32px;
+	line-height: 32px;
+	white-space: nowrap;
+	text-align: left;
+	transition: all .3s;
+}
+
+.article-info .btn-active{
+	color: #fd4c5b;
+}
+.reply-info .btn-active{
+	color: #fd4c5b;
+}
+
+
+.article-info .icon{
+	font-size: 20px;
+}
+
+.article-info .fav-btn:hover, .article-info .like-btn:hover {
+	color: #fd4c5b;
+}
+
+.article-info .comment-btn{
+	display: inline-block;
+	height: 32px;
+	line-height: 32px;
+}
+
+
+.reply-info .like{
+	cursor: pointer;
+}
+
+.reply-info .like:hover{
+	color: #fd4c5b;
+}
+
+.reply-info .reply >a{
+	color: #777;
+}
+.reply-info .reply >a:hover{
+	color: #fd4c5b;
 }

@@ -3,9 +3,12 @@ package com.fzu.recommend.controller;
 import com.fzu.recommend.entity.News;
 import com.fzu.recommend.entity.Page;
 import com.fzu.recommend.entity.User;
+import com.fzu.recommend.service.LikeService;
 import com.fzu.recommend.service.NewsService;
 import com.fzu.recommend.service.UserService;
 //import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.fzu.recommend.util.RecommendConstant;
+import com.fzu.recommend.util.RecommendUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +23,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
-public class HomeController {
+public class HomeController implements RecommendConstant {
 
     @Autowired
     private NewsService newsService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
@@ -38,29 +44,26 @@ public class HomeController {
         List<Map<String, Object>> news = new ArrayList<>();
         if(list != null){
             for(News item : list){
-                String title = item.getTitle();
-                String content = item.getContent();
-                //数据预处理
-                if(title.length() > 25){
-                    title = title.substring(0, 25) + "...";
-                    item.setTitle(title);
-                }
-                String regHtml="<[^>]+>"; //定义HTML标签的正则表达式
-                Pattern pHtml=Pattern.compile(regHtml,Pattern.CASE_INSENSITIVE);
-                Matcher mHtml=pHtml.matcher(content);
-                content = mHtml.replaceAll(""); //过滤html标签
-                if(content.length() > 45){
-                    content = content.substring(0, 45) + "...";
-                }
-                item.setContent(content);
+                //文章简介去html
+                item.setContent(RecommendUtil.htmlReplace(item.getContent()));
+
                 Map<String, Object> map = new HashMap<>();
                 map.put("news", item);
                 User user = userService.findUserById(item.getUserId());
                 map.put("user", user);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_NEWS, item.getId());
+                map.put("likeCount", likeCount);
+
                 news.add(map);
             }
         }
         model.addAttribute("news", news);
         return "/index";
+    }
+
+    @RequestMapping(path = "/error", method = RequestMethod.GET)
+    public String getErrorPage(){
+        return "/error/500";
     }
 }

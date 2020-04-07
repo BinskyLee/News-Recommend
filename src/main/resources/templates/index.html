@@ -7,7 +7,6 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/global.css}" />
-<!--	<link rel="stylesheet" th:href="@{/css/index.css}" />-->
 	<title>新闻推荐系统</title>
 </head>
 <body>
@@ -20,7 +19,7 @@
 					<span class="navbar-brand mb-0 font-weight-bold" style="color: #fd4c5b">News</span>
 					<!--功能 -->
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
+						<span class="navbar-toggler-icon float-right"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarNav">
 						<ul class="navbar-nav">
@@ -44,7 +43,7 @@
 								<a class="nav-link" th:href="@{/login}">登陆</a>
 							</li>
 							<li class="nav-item ml-3" th:if="${loginUser!=null}">
-								<a class="nav-link" th:href="@{/login}">消息</a>
+								<a class="nav-link" th:href="@{/letter/list}">消息</a>
 							</li>
 							<li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${loginUser!=null}">
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,11 +52,11 @@
 									</span>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item text-center" href="site/profile.html">个人主页</a>
-									<a class="dropdown-item text-center" th:href="@{/user/setting}">修改信息</a>
-									<a class="dropdown-item text-center" href="site/profile.html">我的收藏</a>
-									<a class="dropdown-item text-center" href="site/profile.html">我的动态</a>
-									<a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
+									<a class="dropdown-item text-center" target="_blank" th:href="@{|/user/profile/${loginUser.id}|}">个人主页</a>
+									<a class="dropdown-item text-center" target="_blank" th:href="@{/user/setting}">修改信息</a>
+									<a class="dropdown-item text-center" target="_blank" th:href="@{/favorites}">我的收藏</a>
+									<a class="dropdown-item text-center" target="_blank" href="site/profile.html">我的动态</a>
+									<a class="dropdown-item text-center" target="_blank" th:href="@{/logout}">退出登录</a>
 									<div class="dropdown-divider"></div>
 									<span class="dropdown-item text-center text-secondary" >宾斯基</span>
 								</div>
@@ -78,7 +77,7 @@
 			<div class="container">
 				<div class="row">
 					<!-- 左侧栏 -->
-					<div class="col-md-2">
+					<div class="col-lg-2 d-none d-lg-block">
 						<div class="list-group side-bar" th:fragment="side-bar">
 							<a href="#" class="list-group-item active">推荐</a>
 							<a href="#" class="list-group-item">科技</a>
@@ -93,7 +92,7 @@
 						</div>
 					</div>
 					<!--中间栏 -->
-					<div class="col-md-7 content-box">
+					<div class="col-lg-7 content-box">
 						<!--排序方式 -->
 						<div class="dropdown show sort-name">
 							<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -108,14 +107,14 @@
 						</div>
 						<!--新闻列表 -->
 						<ul class="list-unstyled">
-							<li class="media pb-3 pt-3 mb-3 border-bottom"  th:each="map:${news}">
+							<li class="media pb-2 pt-2 mb-2 border-bottom"  th:each="map:${news}">
 								<div class="media-body">
-									<h5 class="mt-0 mb-1">
-										<a href="#" th:utext="${map.news.title}"></a>
+									<h5 class="mt-0 mb-0" style="width: 600px">
+										<a class="wrap-content"  target="_blank" th:href="@{|/news/detail/${map.news.id}|}" th:title="${map.news.title}" th:utext="${map.news.title}"></a>
 									</h5>
-									<div class="article-desc mt-2 mb-3" th:utext="${map.news.content}"></div>
+									<div class="article-desc mt-1 mb-2 wrap-content" style="width: 600px" th:utext="${map.news.content}"></div>
 									<div class="article-info-bar text-muted font-size-12">
-										<a class="up-content mr-5" href="#" target="_blank">
+										<a class="up-content mr-5" th:href="@{|/user/profile/${map.user.id}|}" target="_blank">
 											<span class="face-holder">
 												<img th:src="${map.user.headerUrl}" class="face-img">
 											</span>
@@ -125,7 +124,7 @@
 										<ul class="d-inline float-right">
 											<li class="d-inline ml-2">浏览 111</li>
 											<li class="d-inline ml-2">|</li>
-											<li class="d-inline ml-2">赞 11</li>
+											<li class="d-inline ml-2">赞 <i th:utext="${map.likeCount}"></i></li>
 											<li class="d-inline ml-2">|</li>
 											<li class="d-inline ml-2">回复 7</li>
 										</ul>
@@ -134,14 +133,13 @@
 							</li>
 						</ul>
 						<!-- 分页 -->
-						<nav class="mt-5" th:if="${page.rows>0}">
+						<nav class="mt-5" th:if="${page.total>1}" th:fragment="page-nav">
 							<ul class="pagination justify-content-center">
-								<li class="page-item">
+								<li th:class="|page-item ${page.current==1?'disabled':''}|">
 									<a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
 								</li>
 								<li th:class="|page-item ${page.current==1?'disabled':''}|">
 									<a class="page-link" th:href="@{${page.path}(current=${page.current}-1)}">上一页</a>
-
 								</li>
 								<li th:class="|page-item ${i==page.current?'active':''}|" th:each="i:${#numbers.sequence(page.from, page.to)}">
 									<a class="page-link" th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
@@ -149,20 +147,22 @@
 								<li th:class="|page-item ${page.current==page.total?'disabled':''}|">
 									<a class="page-link" th:href="@{${page.path}(current=${page.current}+1)}">下一页</a>
 								</li>
-								<li class="page-item">
+								<li th:class="|page-item ${page.current==page.total?'disabled':''}|">
 									<a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>
 								</li>
 							</ul>
 						</nav>
 					</div>
 					<!--右侧栏 -->
-					<div class="col-md-3">
+					<div class="col-lg-3 d-none d-lg-block">
 						<div class="side-bar-card ">
 							<div class="card-title bd-bottom">近期热闻</div>
 							<ul class="rank-list">
 								<li class="item">
 									<span class="rank-index">1</span>
-									<a href="#" target="_blank">关于商业，给你一顿毒打。</a>
+									<span class="rank-title">
+										<a href="#" target="_blank" class="rank-wrap-content" title="关于商业，给你一顿毒打。毒打毒打独大独大独大">关于商业，给你一顿毒打。毒打毒打大独大独大</a>
+									</span>
 								</li>
 								<li class="item">
 									<span class="rank-index">2</span>

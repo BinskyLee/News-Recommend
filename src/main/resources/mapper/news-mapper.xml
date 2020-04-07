@@ -5,11 +5,11 @@
 <mapper namespace="com.fzu.recommend.dao.NewsMapper">
 
     <sql id="selectFields">
-        id, user_id, title, content, category_id, key_words, create_time, comment_count, click_count, score
+        id, user_id, title, content, category_id, keywords, create_time, comment_count, click_count, score
     </sql>
 
     <sql id="insertFields">
-        user_id, title, content, category_id, key_words, create_time, comment_count, click_count, score
+        user_id, title, content, category_id, keywords, create_time, comment_count, click_count, score
     </sql>
 
     <select id="selectNews" resultType="News">
@@ -31,10 +31,20 @@
     </select>
 
 
-    <insert id="insertNews" parameterType="News">
+    <insert id="insertNews" parameterType="News" keyProperty="id">
         insert into news (<include refid="insertFields"></include>)
-        value (#{userId}, #{title}, #{content}, #{categoryId}, #{keyWords}, #{createTime}, #{commentCount}, #{clickCount}, #{score})
+        value (#{userId}, #{title}, #{content}, #{categoryId}, #{keywords}, #{createTime}, #{commentCount}, #{clickCount}, #{score})
     </insert>
+
+    <select id="selectNewsById" resultType="News">
+        select <include refid="selectFields"></include>
+        from news
+        where id = #{id}
+    </select>
+
+    <update id="updateCommentCount">
+        update news set comment_count = ${commentCount} where id = #{id}
+    </update>
 
 
 </mapper>

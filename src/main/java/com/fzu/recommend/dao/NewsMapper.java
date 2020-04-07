@@ -17,6 +17,8 @@ public interface NewsMapper {
 
     int insertNews(News news);
 
+    News selectNewsById(int id);
 
+    int updateCommentCount(int id, int commentCount);
 
 }
