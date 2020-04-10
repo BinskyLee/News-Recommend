@@ -18,8 +18,11 @@
 		<!-- 内容 -->
 		<div class="main">
 			<div class="container">
+				<!-- 私信 -->
+				<div th:replace="/site/news-detail::letter"></div>
+				<div th:replace="/site/news-detail::tip"></div>
 				<!-- 个人信息 -->
-				<div class="information pb-3">
+				<div class="information pb-3" id="information" th:fragment="information">
 					<div class="row">
 						<div class="col-md-8">
 							<div class="media">
@@ -28,376 +31,208 @@
 									<div class="name mt-3" th:utext="${user.username}"></div>
 									<div class="mt-2">
 										<span class="item">投稿</span>
-										<span class="count">1213</span>
+										<span class="count" th:utext="${newsCount}">1213</span>
 										<span class="item">关注</span>
-										<span class="count">1213</span>
+										<span class="count followee-count" th:utext="${followeeCount}"></span>
 										<span class="item">粉丝</span>
-										<span class="count">1213</span>
+										<span class="count follower-count" th:utext="${followerCount}"></span>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<span class="op float-right">
-								<button class="operate-btn align-self-end">关注</button>
-								<button class="operate-btn align-self-end">私信</button>
+								<button th:class="|operate-btn align-self-end ${hasFollowed==true?'follow':''}|"
+								th:utext="${hasFollowed==true?'已关注':'关注'}" th:onclick="|follow(this,3,${user.id});|"></button>
+								<button class="operate-btn align-self-end " data-toggle="modal" data-target="#sendModal">私信</button>
 							</span>
-
 						</div>
 					</div>
 				</div>
 				<div class="head-list mt-3">
 					<div class="tab">
-						<a href="javascript:void(0);" class="active">投稿<span>65109</span></a>
-						<a href="javascript:void(0);">关注<span>65109</span></a>
-						<a href="javascript:void(0);">粉丝<span>65109</span></a>
+						<a href="javascript:void(0);" data-th-attr="type='article', userId=${user.id}, bond='.article-list'" class="active">投稿<span th:utext="${newsCount}"></span></a>
+						<a href="javascript:void(0);" data-th-attr="type='followee', userId=${user.id}, bond='.followee-list'">关注<span th:utext="${followeeCount}">65109</span></a>
+						<a href="javascript:void(0);" data-th-attr="type='follower', userId=${user.id}, bond='.follower-list'">粉丝<span th:utext="${followerCount}">65109</span></a>
 					</div>
 				</div>
-				<div class="article-list collapse">
-<!--					<div class="content-view">-->
-<!--						<div class="nothing">-->
-<!--							TA还没有发布文章-->
-<!--						</div>-->
-<!--					</div>-->
-					<div class="content-view">
-						<div class="article-item pb-3 bd-bottom">
-								<a class="title wrap-content" title="黄山管委会：清明小长假第三天景区游览秩序井然" href="#">黄山管委会：清明小长假第三天景区游览秩序井然</a>
+				<div class="article-list collapse show">
+					<div class="content-view" id="article-content-view">
+						<div class="nothing" th:if="${newsCount==0}">
+							TA还没有发布文章
+						</div>
+						<div class="article-list-holder" th:if="${newsCount!=0}">
+							<div class="article-item pb-3 bd-bottom" th:each="map:${newsList}">
+								<a class="title wrap-content" th:title="${map.news.title}" th:href="@{|/news/detail/${map.news.id}|}" th:utext="${map.news.title}"  target="_blank"></a>
 								<div class="article-info mt-2 mb-2">
-									<span class="time">2020-4-17 19:10:19</span>
+									<span class="time" th:utext="${#dates.format(map.news.createTime, 'yyyy-MM-dd')}"></span>
 									<span class="ml-1">|</span>
 									<span class="comment ml-1"><i>5</i>条评论</span>
 									<span class="ml-1">|</span>
-									<span class="like ml-1"><i>200</i>人点赞</span>
+									<span class="like ml-1"><i th:utext="${map.likeCount}">200</i>人点赞</span>
 									<span class="ml-1">|</span>
 									<span class="view ml-1"><i>2000</i>人浏览</span>
 								</div>
-								<div class="article-desc wrap-content mt-1" title="顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒是打算大所多">
-									顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒阿达的阿斗啊阿萨德
-								</div>
-						</div>
-						<div class="article-item pb-3 bd-bottom">
-							<a class="title wrap-content" title="黄山管委会：清明小长假第三天景区游览秩序井然" href="#">黄山管委会：清明小长假第三天景区游览秩序井然</a>
-							<div class="article-info mt-2 mb-2">
-								<span class="time">2020-4-17 19:10:19</span>
-								<span class="ml-1">|</span>
-								<span class="comment ml-1"><i>5</i>条评论</span>
-								<span class="ml-1">|</span>
-								<span class="like ml-1"><i>200</i>人点赞</span>
-								<span class="ml-1">|</span>
-								<span class="view ml-1"><i>2000</i>人浏览</span>
+								<div class="article-desc wrap-content mt-1" th:title="${map.news.content}" th:utext="${map.news.content}"></div>
 							</div>
-							<div class="article-desc wrap-content mt-1" title="顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒是打算大所多">
-								顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒阿达的阿斗啊阿萨德
-							</div>
-						</div>
-						<div class="article-item pb-3 bd-bottom">
-							<a class="title wrap-content" title="黄山管委会：清明小长假第三天景区游览秩序井然" href="#">黄山管委会：清明小长假第三天景区游览秩序井然</a>
-							<div class="article-info mt-2 mb-2">
-								<span class="time">2020-4-17 19:10:19</span>
-								<span class="ml-1">|</span>
-								<span class="comment ml-1"><i>5</i>条评论</span>
-								<span class="ml-1">|</span>
-								<span class="like ml-1"><i>200</i>人点赞</span>
-								<span class="ml-1">|</span>
-								<span class="view ml-1"><i>2000</i>人浏览</span>
-							</div>
-							<div class="article-desc wrap-content mt-1" title="顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒是打算大所多">
-								顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒阿达的阿斗啊阿萨德
+							<div class="page" th:if="${newsPage.total>1}" th:attr="path=${newsPage.path} ,bond='.article-list'">
+								<nav class="mt-5">
+									<ul class="pagination justify-content-center">
+										<li class="page-item" th:classappend="${newsPage.current==1?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${newsPage.current}">首页</a>
+										</li>
+										<li class="page-item" th:classappend="${newsPage.current==1?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${newsPage.current}-1">上一页</a>
+										</li>
+										<li class="page-item" th:classappend="${i==newsPage.current?'active':''}" th:each="i:${#numbers.sequence(newsPage.from, newsPage.to)}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${i}" th:text="${i}"></a>
+										</li>
+										<li class="page-item" th:classappend="${newsPage.current==newsPage.total?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${newsPage.current}+1">下一页</a>
+										</li>
+										<li class="page-item" th:classappend="${newsPage.current==newsPage.total?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${newsPage.total}">末页</a>
+										</li>
+									</ul>
+								</nav>
 							</div>
 						</div>
-						<div class="article-item pb-3 bd-bottom">
-							<a class="title wrap-content" title="黄山管委会：清明小长假第三天景区游览秩序井然" href="#">黄山管委会：清明小长假第三天景区游览秩序井然</a>
-							<div class="article-info mt-2 mb-2">
-								<span class="time">2020-4-17 19:10:19</span>
-								<span class="ml-1">|</span>
-								<span class="comment ml-1"><i>5</i>条评论</span>
-								<span class="ml-1">|</span>
-								<span class="like ml-1"><i>200</i>人点赞</span>
-								<span class="ml-1">|</span>
-								<span class="view ml-1"><i>2000</i>人浏览</span>
-							</div>
-							<div class="article-desc wrap-content mt-1" title="顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒是打算大所多">
-								顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒阿达的阿斗啊阿萨德
-							</div>
-						</div>
-						<div class="article-item pb-3 bd-bottom">
-							<a class="title wrap-content" title="黄山管委会：清明小长假第三天景区游览秩序井然" href="#">黄山管委会：清明小长假第三天景区游览秩序井然</a>
-							<div class="article-info mt-2 mb-2">
-								<span class="time">2020-4-17 19:10:19</span>
-								<span class="ml-1">|</span>
-								<span class="comment ml-1"><i>5</i>条评论</span>
-								<span class="ml-1">|</span>
-								<span class="like ml-1"><i>200</i>人点赞</span>
-								<span class="ml-1">|</span>
-								<span class="view ml-1"><i>2000</i>人浏览</span>
-							</div>
-							<div class="article-desc wrap-content mt-1" title="顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒是打算大所多">
-								顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片顺便测试图片撒阿达的阿斗啊阿萨德
-							</div>
-						</div>
-						<nav class="mt-5">
-							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="#">首页</a></li>
-								<li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#">下一页</a></li>
-								<li class="page-item"><a class="page-link" href="#">末页</a></li>
-							</ul>
-						</nav>
 					</div>
 				</div>
-				<div class="follow-list collapse">
-<!--					<div class="content-view">-->
-<!--						<div class="nothing">TA暂未关注任何人</div>-->
-<!--					</div>-->
-					<div class="content-view">
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
+				<div class="followee-list collapse">
+					<div class="content-view" id="followee-content-view">
+						<div class="nothing" th:if="${followeeCount==0}">TA暂未关注任何人</div>
+						<div class="follow-list-holder" th:if="${followeeCount!=0}">
+							<div class="follow-item mt-3  pb-4 bd-bottom" th:each="map:${followeeList}">
+								<div class="row">
+									<div class="media col-md-10">
+										<a th:href="@{|/user/profile/${map.user.id}|}" target="_blank">
+											<img th:src="@{${map.user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
+										</a>
+										<div class="media-body">
+											<div class="name mt-2">
+												<a th:utext="${map.user.username}" th:href="@{|/user/profile/${map.user.id}|}"  target="_blank"></a>
+											</div>
+											<div class="mt-2">
+												<span class="item">投稿</span>
+												<span class="count" th:utext="${map.newsCount}"></span>
+												<span class="item">关注</span>
+												<span class="count" th:utext="${map.followeeCount}"></span>
+												<span class="item">粉丝</span>
+												<span class="count follower-count" th:utext="${map.followerCount}"></span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
+									<div class="col-md-2">
+										<span th:class="|fans-action-btn ${map.hasFollowed==true?'follow':''}|" th:onclick="|follow(this,3,${map.user.id});|"
+											th:utext="${map.hasFollowed==true?'已关注':'关注'}">
+										</span>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
+							<div class="page" th:if="${followeePage.total>1}" th:attr="path=${followeePage.path} ,bond='.followee-list'">
+								<nav class="mt-5">
+									<ul class="pagination justify-content-center">
+										<li class="page-item" th:classappend="${followeePage.current==1?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${followeePage.current}">首页</a>
+										</li>
+										<li class="page-item" th:classappend="${followeePage.current==1?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${followeePage.current}-1">上一页</a>
+										</li>
+										<li class="page-item" th:classappend="${i==followeePage.current?'active':''}" th:each="i:${#numbers.sequence(followeePage.from, followeePage.to)}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${i}" th:text="${i}"></a>
+										</li>
+										<li class="page-item" th:classappend="${followeePage.current==followeePage.total?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${followeePage.current}+1">下一页</a>
+										</li>
+										<li class="page-item" th:classappend="${followeePage.current==followeePage.total?'disabled':''}">
+											<a class="page-link" href="javascript:void(0)"
+											   data-th-attr="pageIndex=${followeePage.total}">末页</a>
+										</li>
+									</ul>
+								</nav>
 							</div>
 						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<nav class="mt-5">
-							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="#">首页</a></li>
-								<li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#">下一页</a></li>
-								<li class="page-item"><a class="page-link" href="#">末页</a></li>
-							</ul>
-						</nav>
 					</div>
 				</div>
-				<div class="fans-list collapse show">
-					<!--					<div class="content-view">-->
-					<!--						<div class="nothing">暂未有人关注TA</div>-->
-					<!--					</div>-->
-					<div class="content-view">
-						<div class="fans-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
+				<div class="follower-list collapse">
+					<div class="content-view" id="follower-content-view">
+						<div class="nothing" th:if="${followerCount==0}">暂未有人关注TA</div>
+						<div class="fans-list-holder" th:if="${followerCount!=0}">
+							<div class="fans-item mt-3  pb-4 bd-bottom" th:each="map:${followerList}">
+								<div class="row">
+									<div class="media col-md-10">
+										<a th:href="@{|/user/profile/${map.user.id}|}"  target="_blank">
+											<img th:src="@{${map.user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
+										</a>
+										<div class="media-body">
+											<div class="name mt-2">
+												<a th:href="@{|/user/profile/${map.user.id}|}" th:utext="${map.user.username}" target="_blank"></a>
+											</div>
+											<div class="mt-2">
+												<span class="item">投稿</span>
+												<span class="count" th:utext="${map.newsCount}">1213</span>
+												<span class="item">关注</span>
+												<span class="count" th:utext="${map.followeeCount}">1213</span>
+												<span class="item">粉丝</span>
+												<span class="count follower-count" th:utext="${map.followerCount}">1213</span>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
+									<div class="col-md-2">
+										<span th:class="|fans-action-btn ${map.hasFollowed==true?'follow':''}|" th:onclick="|follow(this,3,${map.user.id});|"
+											  th:utext="${map.hasFollowed==true?'已关注':'关注'}">
+										</span>
 									</div>
+								</div>
+								<div class="page" th:if="${followerPage.total>1}" th:attr="path=${followerPage.path} ,bond='.followee-list'">
+									<nav class="mt-5">
+										<ul class="pagination justify-content-center">
+											<li class="page-item" th:classappend="${followerPage.current==1?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${followerPage.current}">首页</a>
+											</li>
+											<li class="page-item" th:classappend="${followerPage.current==1?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${followerPage.current}-1">上一页</a>
+											</li>
+											<li class="page-item" th:classappend="${i==followerPage.current?'active':''}" th:each="i:${#numbers.sequence(followerPage.from, followerPage.to)}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${i}" th:text="${i}"></a>
+											</li>
+											<li class="page-item" th:classappend="${followerPage.current==followerPage.total?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${followerPage.current}+1">下一页</a>
+											</li>
+											<li class="page-item" th:classappend="${followerPage.current==followerPage.total?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${followerPage.total}">末页</a>
+											</li>
+										</ul>
+									</nav>
 								</div>
 							</div>
 						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="follow-item mt-3  pb-4 bd-bottom">
-							<div class="row">
-								<div class="media col-md-10">
-									<a href="profile.html">
-										<img th:src="@{${user.headerUrl}}" style="width: 60px;height: 60px;" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="name mt-3">栀颜丶</div>
-										<div class="mt-2">
-											<span class="item">投稿</span>
-											<span class="count">1213</span>
-											<span class="item">关注</span>
-											<span class="count">1213</span>
-											<span class="item">粉丝</span>
-											<span class="count">1213</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="fans-action-btn follow">
-										<span class="fans-action-text">已关注</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<nav class="mt-5">
-							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="#">首页</a></li>
-								<li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#">下一页</a></li>
-								<li class="page-item"><a class="page-link" href="#">末页</a></li>
-							</ul>
-						</nav>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 	<script th:src="@{/js/global.js}"></script>
 	<script th:src="@{/js/profile.js}"></script>
+	<script th:src="@{/js/letter.js}"></script>
 </body>
 </html>

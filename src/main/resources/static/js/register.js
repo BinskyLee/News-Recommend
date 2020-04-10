@@ -11,7 +11,8 @@ $(function(){
 function check_email() {
 	var email = $("#email").val();
 	// var reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
-	var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$");
+	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+	// var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$");
 	if(reg.test(email)){
 		var flag = false;
 		$.ajax({
@@ -126,6 +127,7 @@ function check_data() {
 		return false;
 	}
 }
+
 function clear_error() {
 	$(this).removeClass("is-invalid");
 }

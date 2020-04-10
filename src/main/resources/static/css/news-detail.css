@@ -78,6 +78,8 @@
 	box-sizing: border-box;
 	font-weight: 600;
 }
+
+
 .side-bar-card .up-operate .operate-btn:hover , .article-info .comment-btn .operate-btn:hover{
 	background-color: #EB4556;
 	border-color: #EB4556;
@@ -85,6 +87,14 @@
 }
 .side-bar-card .up-operate .operate-btn:hover , .article-info .comment-btn .operate-btn:focus{
 	outline: none;
+}
+
+.side-bar-card .up-operate .operate-btn.follow{
+	background-color: #ffffff;
+	color: #fd4c5b;
+}
+.side-bar-card .up-operate .operate-btn.follow:hover{
+	background-color: #eee;
 }
 
 .side-bar-card .up-article-list-block .block-title{
@@ -137,8 +147,10 @@
 
 .paging-box .result{
 	padding-right: 10px;
+	line-height: 26px;
+	text-align: center;
 }
-.paging-box >a {
+.paging-box a {
 	color: #222;
 	cursor: pointer;
 	text-align: center;

@@ -12,8 +12,8 @@ import com.fzu.recommend.util.RecommendUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +36,9 @@ public class HomeController implements RecommendConstant {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
-        //方法调用前，SpringMVC会自动实例化Page和Model，并将Page注入Model
-        //所以在Thymeleaf中可以直接访问Page对象中的数据
         page.setRows(newsService.findNewsRows(0));
         page.setPath("/");
+        page.setLimit(5);
         List<News> list = newsService.findNews(0, page.getOffset(), page.getLimit());
         List<Map<String, Object>> news = new ArrayList<>();
         if(list != null){
@@ -66,4 +65,34 @@ public class HomeController implements RecommendConstant {
     public String getErrorPage(){
         return "/error/500";
     }
+
+
+    @RequestMapping(path = "/followee", method = RequestMethod.GET)
+    public ModelAndView getNewsPage(Model model, @RequestParam(value = "current", defaultValue = "1", required = false) int current, boolean async){
+        //方法调用前，SpringMVC会自动实例化Page和Model，并将Page注入Model
+        //所以在Thymeleaf中可以直接访问Page对象中的数据
+        Page page = new Page();
+        page.setRows(newsService.findNewsRows(0));
+        page.setPath("/");
+        page.setCurrent(current);
+        model.addAttribute("page", page);
+        List<News> list = newsService.findNews(0, page.getOffset(), page.getLimit());
+        List<Map<String, Object>> news = new ArrayList<>();
+        if(list != null){
+            for(News item : list){
+                //文章简介去html
+                item.setContent(RecommendUtil.htmlReplace(item.getContent()));
+                Map<String, Object> map = new HashMap<>();
+                map.put("news", item);
+                User user = userService.findUserById(item.getUserId());
+                map.put("user", user);
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_NEWS, item.getId());
+                map.put("likeCount", likeCount);
+                news.add(map);
+            }
+        }
+        model.addAttribute("news", news);
+        return new ModelAndView(async == true?  "/site/followee::.news-list":"/site/followee");
+    }
+
 }

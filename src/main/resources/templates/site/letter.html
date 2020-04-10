@@ -20,7 +20,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-2"></div>
-					<div class="col-;g-8">
+					<div class="col-lg-8">
 						<div class="position-relative">
 							<!-- 选项 -->
 							<ul class="nav nav-tabs mb-3">
@@ -28,7 +28,7 @@
 									<a class="nav-link position-relative active" th:href="@{/letter/list}">用户私信<span th:if="${letterUnreadCount != 0}" class="badge" th:utext="${letterUnreadCount}"></span></a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link position-relative" href="notice.html">系统通知<span class="badge">27</span></a>
+									<a class="nav-link position-relative" th:href="@{/notice/list}">系统通知<span class="badge" th:if="${noticeUnreadCount!=0}" th:utext="${noticeUnreadCount}">27</span></a>
 								</li>
 							</ul>
 							<button type="button" class="btn btn-main btn-sm position-absolute rt-0" data-toggle="modal" data-target="#sendModal">发私信</button>
@@ -82,12 +82,12 @@
 						<ul class="list-unstyled" th:each="conversation:${conversations}">
 							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
 								<span class="badge" th:if="${conversation.unreadCount != 0}" th:text="${conversation.unreadCount}"></span>
-								<a href="profile.html">
+								<a th:href="@{|/user/profile/${conversation.target.id}|}">
 									<img th:src="${conversation.target.headerUrl}" class="mr-4 rounded-circle user-header" alt="用户头像" >
 								</a>
 								<div class="media-body conversation">
 									<h6 class="mt-1 mb-2">
-										<a class="conversation-user" href="#" th:text="${conversation.target.username}"></a>
+										<a class="conversation-user" th:href="@{|/user/profile/${conversation.target.id}|}" th:text="${conversation.target.username}"></a>
 										<span class="float-right text-muted font-size-12" th:utext="${#dates.format(conversation.conversation.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 									</h6>
 									<div style="width: 638px">

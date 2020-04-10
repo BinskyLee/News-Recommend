@@ -39,7 +39,7 @@
 				var seconds = $("#seconds").text();
 				$("#seconds").text(--seconds);
 				if(seconds == 0) {
-					location.href = $("#target").attr("href");
+					location.href = CONTEXT_PATH + $("#target").attr("href");
 				}
 			}, 1000);
 		});

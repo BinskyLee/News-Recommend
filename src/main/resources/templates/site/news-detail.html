@@ -16,8 +16,53 @@
 		<header th:replace="index::header"></header>
 		<!-- 内容 -->
 		<div class="main">
-			<!-- 帖子详情 -->
 			<div class="container">
+				<!-- 私信 -->
+				<!-- 弹出框 -->
+				<div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="letter">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">发私信</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="recipient-name" class="col-form-label">发给：</label>
+										<input type="text" class="form-control" id="recipient-name" autocomplete="off" th:value="${user.username}">
+										<div class="invalid-feedback" id="invalid-target">私信对象不能为空</div>
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">内容：</label>
+										<div class="invalid-feedback" id="invalid-content">内容不能为空</div>
+										<textarea class="form-control" id="message-text" rows="10"></textarea>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-main" id="sendBtn">发送</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 提示框 -->
+				<div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true" th:fragment="tip">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="hintModalLabel">提示</h5>
+							</div>
+							<div class="modal-body" id="hintBody">
+								发送完毕!
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="row">
 					<!-- 左侧栏 -->
 					<div class="col-lg-2">
@@ -27,15 +72,15 @@
 					<div class="col-lg-7 content-box" >
 						<h1 class="news-title mb-3" th:utext="${news.title}"></h1>
 						<!-- 信息 -->
-						<div class="news-info text-muted mb-5">
+						<div class="news-info text-muted mb-3">
 							<span>运动</span>
 							<span class="ml-4" th:utext="${#dates.format(news.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 							<span class="ml-4">3137阅读</span>
-							<span class="ml-4">19点赞</span>
+							<span class="ml-4"><i th:utext="${likeCount}"></i>点赞</span>
 							<span class="ml-4"><i th:utext="${news.commentCount}"></i>评论</span>
 						</div>
 						<!-- 正文 -->
-						<div th:utext="${news.content}" class="mt-4 mb-3 content bd-bottom"></div>
+						<div th:utext="${news.content}" class="mt-3 mb-3 content bd-bottom"></div>
 						<!-- 操作 -->
 						<div class="article-info row">
 							<div class="col-md-8">
@@ -43,7 +88,7 @@
 									<b class="square"></b>
 									<i th:text="${news.commentCount}"></i>条评论
 								</span>
-								<span th:class="|like-btn ml-4 ${likeStatus==1?'btn-active':''}|" th:onclick="|like(this,1,${news.id});|">
+								<span th:class="|like-btn ml-4 ${likeStatus==1?'btn-active':''}|" th:onclick="|like(this,1,${news.id},${user.id},${news.id});|">
 									<svg class="icon" aria-hidden="true">
 										<use xlink:href="#icon-dianzan"></use>
 									</svg>
@@ -64,99 +109,135 @@
 						</div>
 						<hr>
 						<!-- 评论列表 -->
-						<ul class="list-style mt-4">
-						<!-- 第1条评论 -->
-							<li class="media pb-3 pt-3 mb-3 border-bottom" th:each="cvo:${comments}">
-								<a th:href="@{|/user/profile/${cvo.user.id}|}" target="_blank">
-									<img th:src="${cvo.user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-								</a>
-								<div class="media-body">
-									<div class="user mt-0">
-										<a href="#" th:href="@{|/user/profile/${cvo.user.id}|}" class="name" target="_blank" th:utext="${cvo.user.username}"></a>
-									</div>
-									<div class="mt-2" th:utext="${cvo.comment.content}"></div>
-									<div class="reply-info mt-2 text-muted font-size-12">
-										<span class="time" th:utext="${#dates.format(cvo.comment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-										<span th:class="|like ml-2 ${cvo.likeStatus==1?'btn-active':''}|" th:onclick="|like(this,2,${cvo.comment.id});|">
-											<svg class="icon" aria-hidden="true">
-												<use xlink:href="#icon-dianzan"></use>
-											</svg>
-											<span th:utext="${cvo.likeCount}"></span>
-										</span>
-										<span class="reply ml-3 text-muted">
-											<a th:href="|#comment-${cvoStat.count}|" th:text="|回复(${cvo.replyCount})|" data-toggle="collapse">回复</a>
-										</span>
-									</div>
-									<div th:id="|comment-${cvoStat.count}|" class="collapse mt-2">
-										<form method="post" class="is-invalid"  th:action="@{|/comment/add/${news.id}|}" onsubmit="return check(this)">
-											<span>
-												<input type="text" class="reply-input" style="width: 422px" name="content" autocomplete="off" placeholder="请输入你的观点"/>
-												<input type="hidden" name="entityType" value="2">
-												<input type="hidden" name="entityId" th:value="${cvo.comment.id}">
-												<button type="submit" class="btn btn-main btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+						<div class="comment-list">
+							<div class="comment-list-holder">
+								<ul class="list-style mt-4">
+									<!-- 第1条评论 -->
+									<li class="media pb-3 pt-3 mb-3 border-bottom" th:each="cvo:${comments}">
+										<a th:href="@{|/user/profile/${cvo.user.id}|}" target="_blank">
+											<img th:src="${cvo.user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
+										</a>
+										<div class="media-body">
+											<div class="user mt-0">
+												<a href="#" th:href="@{|/user/profile/${cvo.user.id}|}" class="name" target="_blank" th:utext="${cvo.user.username}"></a>
+											</div>
+											<div class="mt-2" th:utext="${cvo.comment.content}"></div>
+											<div class="reply-info mt-2 text-muted font-size-12">
+												<span class="time" th:utext="${#dates.format(cvo.comment.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+												<span th:class="|like ml-2 ${cvo.likeStatus==1?'btn-active':''}|" th:onclick="|like(this,2,${cvo.comment.id},${cvo.user.id},${news.id});|">
+												<svg class="icon" aria-hidden="true">
+													<use xlink:href="#icon-dianzan"></use>
+												</svg>
+												<span th:utext="${cvo.likeCount}"></span>
 											</span>
-										</form>
-									</div>
-									<!-- 回复列表 -->
-									<ul class="list-unstyled   pt-1  font-size-12" th:each="rvo:${cvo.replies}">
-										<li class="media  pt-2 mb-2">
-											<a th:href="@{|/user/profile/${rvo.user.id}|} " target="_blank">
-												<img th:src="${rvo.user.headerUrl}" class="align-self-start mr-4 rounded-circle reply-face" alt="用户头像" >
-											</a>
-											<div class="media-body">
-												<div class="user mt-0">
-													<a th:href="@{|/user/profile/${rvo.user.id}|}" class="name" target="_blank" th:utext="${rvo.user.username}"></a>
-												</div>
-												<div class="mt-1 mb-2">
-													<span th:if="${rvo.target != null}">
-														回复
-														<a href="#" target="_blank" class="reply-others" th:text="| @${rvo.target.username}: |"></a>
-														<i th:utext="${rvo.reply.content}"></i>
-													</span>
-													<span th:if="${rvo.target == null}">
-														<i th:utext="${rvo.reply.content}"></i>
-													</span>
-												</div>
-												<div class="reply-info text-muted font-size-12">
-													<span class="time" th:utext="${#dates.format(rvo.reply.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-													<span th:class="|like ml-2 ${rvo.likeStatus==1?'btn-active':''}|" th:onclick="|like(this,2,${rvo.reply.id})|">
-														<svg class="icon" aria-hidden="true">
-															<use xlink:href="#icon-dianzan"></use>
-														</svg>
-														<span th:utext="${rvo.likeCount}"></span>
-													</span>
-													<span class="reply ml-3 text-muted">
-														<a th:href="|#reply-${rvoStat.count}|" data-toggle="collapse">回复</a>
-													</span>
-													<div th:id="|reply-${rvoStat.count}|" class="collapse mt-2">
-														<form method="post" th:action="@{|/comment/add/${news.id}|}" onsubmit="return check(this)">
-															<span>
-																<input type="text" class="reply-input" name="content" autocomplete="off" th:placeholder="|回复 @${rvo.user.username}|"/>
-																<input type="hidden" name="entityType" value="2">
-																<input type="hidden" name="targetId" th:value="${rvo.user.id}">
-																<input type="hidden" name="entityId" th:value="${cvo.comment.id}">
-																<button type="submit" class="btn btn-main btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
-															</span>
-														</form>
+												<span class="reply ml-3 text-muted">
+												<a th:href="|#comment-${cvoStat.count}|" th:text="|回复(${cvo.replyCount})|" data-toggle="collapse">回复</a>
+											</span>
+											</div>
+											<div th:id="|comment-${cvoStat.count}|" class="collapse mt-2">
+												<form method="post" class="is-invalid"  th:action="@{|/comment/add/${news.id}|}" onsubmit="return check(this)">
+												<span>
+													<input type="text" class="reply-input" style="width: 422px" name="content" autocomplete="off" placeholder="请输入你的观点"/>
+													<input type="hidden" name="entityType" value="2">
+													<input type="hidden" name="entityId" th:value="${cvo.comment.id}">
+													<button type="submit" class="btn btn-main btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+												</span>
+												</form>
+											</div>
+											<!-- 回复列表 -->
+											<div class="reply-list">
+												<div class="reply-list-holder">
+													<ul class="list-unstyled pt-1 font-size-12" th:each="rvo:${cvo.replies}">
+														<li class="media  pt-2 mb-2">
+															<a th:href="@{|/user/profile/${rvo.user.id}|} " target="_blank">
+																<img th:src="${rvo.user.headerUrl}" class="align-self-start mr-4 rounded-circle reply-face" alt="用户头像" >
+															</a>
+															<div class="media-body">
+																<div class="user mt-0">
+																	<a th:href="@{|/user/profile/${rvo.user.id}|}" class="name" target="_blank" th:utext="${rvo.user.username}"></a>
+																</div>
+																<div class="mt-1 mb-2">
+																	<span th:if="${rvo.target != null}">
+																			回复
+																		<a href="#" target="_blank" class="reply-others" th:text="| @${rvo.target.username}: |"></a>
+																		<i th:utext="${rvo.reply.content}"></i>
+																	</span>
+																	<span th:if="${rvo.target == null}">
+																		<i th:utext="${rvo.reply.content}"></i>
+																	</span>
+																</div>
+																<div class="reply-info text-muted font-size-12">
+																	<span class="time" th:utext="${#dates.format(rvo.reply.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+																	<span th:class="|like ml-2 ${rvo.likeStatus==1?'btn-active':''}|" th:onclick="|like(this,2,${rvo.reply.id},${rvo.user.id},${newsId})|">
+																		<svg class="icon" aria-hidden="true">
+																			<use xlink:href="#icon-dianzan"></use>
+																		</svg>
+																		<span th:utext="${rvo.likeCount}"></span>
+																	</span>
+																	<span class="reply ml-3 text-muted">
+																		<a th:href="|#reply-${rvoStat.count}|" data-toggle="collapse">回复</a>
+																	</span>
+																	<div th:id="|reply-${rvoStat.count}|" class="collapse mt-2">
+																		<form method="post" th:action="@{|/comment/add/${news.id}|}" onsubmit="return check(this)">
+																			<span>
+																				<input type="text" class="reply-input" name="content" autocomplete="off" th:placeholder="|回复 @${rvo.user.username}|"/>
+																				<input type="hidden" name="entityType" value="2">
+																				<input type="hidden" name="targetId" th:value="${rvo.user.id}">
+																				<input type="hidden" name="entityId" th:value="${cvo.comment.id}">
+																				<button type="submit" class="btn btn-main btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+																			</span>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</ul>
+													<div class="paging-box" th:if="${cvo.replyPage.total > 1}" th:attr="total=${cvo.replyPage.total}, path=${cvo.replyPage.path} ,bond='.reply-list', type=2, commentId=${cvo.comment.id}">
+														<nav class="pagination">
+															<span class="result">共<i th:text="${cvo.replyPage.total}"></i>页</span>
+															<a th:if="${cvo.replyPage.current != 1}" a href="javascript:void(0);"
+															   class="prev" data-th-attr="pageIndex=${cvo.replyPage.current}-1">上一页</a>
+															<a href="javascript:void(0);" th:class="${i==cvo.replyPage.current?'current':'tcd-number'}"
+															   data-th-attr="pageIndex=${i}" th:each="i:${#numbers.sequence(cvo.replyPage.from,cvo.replyPage.to)}" th:text="${i}">1</a>
+															<a th:if="${cvo.replyPage.current != cvo.replyPage.total}" href="javascript:void(0);"
+															   class="next" data-th-attr="pageIndex=${cvo.replyPage.current}+1">下一页</a>
+														</nav>
 													</div>
 												</div>
 											</div>
-										</li>
-									</ul>
-									<!-- 分页-->
-<!--									<div th:if="${cvo.page.total > 1}" class="paging-box">-->
-<!--										<span class="result">共<i th:text="${cvo.page.total}"></i>页</span>-->
-<!--										<a th:if="${cvo.page.current != 1}" a href="javascript:void(0);" th:onclick="|comment_page(${i}, 2, ${cvo.comment.id})|" class="prev">上一页</a>-->
-<!--										<a href="javascript:;" th:class="${i==cvo.page.current?'current':'tcd-number'}" th:each="i:${#numbers.sequence(cvo.page.from,cvo.page.to)}" th:text="${i}">1</a>-->
-<!--										<a th:if="${cvo.page.current != cvo.page.total}" href="javascript:;" class="next">下一页</a>-->
-<!--									</div>-->
+										</div>
+									</li>
+								</ul>
+								<!-- 分页 -->
+								<div class="page" th:if="${commentPage.total>1}" th:attr="path=${commentPage.path} ,bond='.comment-list', type=1, commentId=0">
+									<nav class="mt-5">
+										<ul class="pagination justify-content-center">
+											<li class="page-item" th:classappend="${commentPage.current==1?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${commentPage.current}">首页</a>
+											</li>
+											<li class="page-item" th:classappend="${commentPage.current==1?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${commentPage.current}-1">上一页</a>
+											</li>
+											<li class="page-item" th:classappend="${i==commentPage.current?'active':''}" th:each="i:${#numbers.sequence(commentPage.from, commentPage.to)}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${i}" th:text="${i}"></a>
+											</li>
+											<li class="page-item" th:classappend="${commentPage.current==commentPage.total?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${commentPage.current}+1">下一页</a>
+											</li>
+											<li class="page-item" th:classappend="${commentPage.current==commentPage.total?'disabled':''}">
+												<a class="page-link" href="javascript:void(0)"
+												   data-th-attr="pageIndex=${commentPage.total}">末页</a>
+											</li>
+										</ul>
+									</nav>
 								</div>
-							</li>
-						</ul>
-						<!-- 分页 -->
-						<nav class="mt-5" th:replace="index::page-nav">
-						</nav>
-					<!-- 评论输入 -->
+							</div>
+						</div>
+						<!-- 评论输入 -->
 						<div class="mt-3 text-right pr-3 pt-2">
 							<form class="replyform" method="post" th:action="@{|/comment/add/${news.id}|}" onsubmit="return check(this)">
 								<p class="mt-3">
@@ -174,7 +255,7 @@
 					<!--右侧栏 -->
 					<div class="col-lg-3">
 						<div class="side-bar-card ">
-							<div class="media pb-2 pt-3 mb-2">
+							<div class="media pl-3 pb-2 pt-3 mb-2">
 								<a th:href="@{|/user/profile/${user.id}|}">
 									<img th:src="@{${user.headerUrl}}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
 								</a>
@@ -184,15 +265,17 @@
 									</div>
 									<div class="mt-2 text-muted">
 										<span>关注:</span>
-										<span>20</span>
+										<span id="followee-count" th:utext="${followeeCount}"></span>
 										<span class="ml-4">粉丝:</span>
-										<span>1.3万</span>
+										<span id="follower-count" th:utext="${followerCount}"></span>
 									</div>
 								</div>
 							</div>
 							<div class="up-operate pd-2">
-								<span class="operate-btn">关注</span>
-								<span class="operate-btn">私信</span>
+								<span th:class="|operate-btn ${hasFollowed==true?'follow':''}|"
+									  th:utext="${hasFollowed==true?'已关注':'关注'}" th:onclick="|follow(this,3,${user.id});|">
+								</span>
+								<span class="operate-btn" data-toggle="modal" data-target="#sendModal">私信</span>
 							</div>
 							<div class="up-article-list-block bd-bottom mt-5 mb-2 pl-1 pr-1">
 								<span class="block-title">最新投稿</span>
@@ -235,10 +318,9 @@
 										<span>1.3万</span>
 									</div>
 								</li>
-
 							</ul>
 						</div>
-					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -249,5 +331,6 @@
 	<script th:src="@{/js/global.js}"></script>
 	<script th:src="@{/js/news-detail.js}"></script>
 	<script th:src="@{/js/iconfont.js}"></script>
+	<script th:src="@{/js/letter.js}"></script>
 </body>
 </html>

@@ -20,11 +20,12 @@
 }
 
 
-.main .conversation .conversation-user{
+.main .conversation .conversation-user, .main .conversation .notice{
 	color: #6c757d;
 	font-weight: bold;
 }
-.main .conversation .conversation-user:hover, .main .conversation .letters-count:hover{
+
+.main .conversation .conversation-user:hover, .main .conversation .letters-count, .toast .link:hover{
 	color: #fd4c5b;
 }
 
@@ -41,7 +42,7 @@
 	color: #fd4c5b;
 }
 
-.main .conversation .letters-count{
+.main .conversation .letters-count, .toast .link{
 	display: inline-block;
 	color: #2faee3;
 }
@@ -62,3 +63,4 @@
 	webkit-box-shadow:none;
 	box-shadow:none;
 }
+

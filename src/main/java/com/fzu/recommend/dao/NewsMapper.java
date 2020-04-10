@@ -21,4 +21,5 @@ public interface NewsMapper {
 
     int updateCommentCount(int id, int commentCount);
 
+
 }

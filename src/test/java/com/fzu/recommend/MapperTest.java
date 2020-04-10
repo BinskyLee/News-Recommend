@@ -26,8 +26,8 @@ public class MapperTest implements RecommendConstant {
     @Autowired
     private NewsMapper newsMapper;
 
-    @Autowired
-    private LoginTicketMapper loginTicketMapper;
+//    @Autowired
+//    private LoginTicketMapper loginTicketMapper;
 
     @Autowired
     private CommentMapper commentMapper;
@@ -80,26 +80,26 @@ public class MapperTest implements RecommendConstant {
         System.out.println(rows);
     }
 
-    @Test
-    public void testInsertLoginTicket(){
-        LoginTicket loginTicket = new LoginTicket();
-        loginTicket.setUserId(1);
-        loginTicket.setExpired(new Date(System.currentTimeMillis() + 3600 * 30 * 1000));
-        loginTicket.setTicket(RecommendUtil.generateUUID());
-        loginTicket.setStatus(0);
-        loginTicketMapper.insertLoginTicket(loginTicket);
-    }
+//    @Test
+//    public void testInsertLoginTicket(){
+//        LoginTicket loginTicket = new LoginTicket();
+//        loginTicket.setUserId(1);
+////        loginTicket.setExpired(new Date(System.currentTimeMillis() + 3600 * 30 * 1000));
+//        loginTicket.setTicket(RecommendUtil.generateUUID());
+////        loginTicket.setStatus(0);
+//        loginTicketMapper.insertLoginTicket(loginTicket);
+//    }
+//
+//    @Test
+//    public void testSelectByTicket(){
+//        LoginTicket loginTicket = loginTicketMapper.selectByTicket("b47610ed403a4b02a355e01ff1c73b79");
+//        System.out.println(loginTicket);
+//    }
 
-    @Test
-    public void testSelectByTicket(){
-        LoginTicket loginTicket = loginTicketMapper.selectByTicket("b47610ed403a4b02a355e01ff1c73b79");
-        System.out.println(loginTicket);
-    }
-
-    @Test
-    public void testUpdateStatus(){
-        loginTicketMapper.updateStatus("b47610ed403a4b02a355e01ff1c73b79", 1);
-    }
+//    @Test
+//    public void testUpdateStatus(){
+//        loginTicketMapper.updateStatus("b47610ed403a4b02a355e01ff1c73b79", 1);
+//    }
 
     @Test
     public void testInsertComment(){
