@@ -1,0 +1,190 @@
+.main{
+    width:65%;
+    margin: 60px auto;
+    position: relative;
+}
+
+.information .name{
+    color: #222222;
+    font-weight: 700;
+    line-height: 18px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+.information .item, .content-view .item{
+    color: #a4aab2;
+}
+
+.information .count, .content-view .count{
+    display: inline-block;
+    width: 45px;
+    color: #fd4c5b;
+}
+
+.information .op{
+    margin-top: 30px;
+    margin-right: 15px
+}
+
+.information .op .operate-btn{
+    width: 90px;
+    height: 32px;
+    line-height: 32px;
+    margin-left: 15px;
+    background-color: #fd4c5b;
+    border: 1px solid #fd4c5b;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .3s;
+    box-sizing: border-box;
+}
+.information .op .operate-btn:hover{
+    background-color: #EB4556;
+    border-color: #EB4556;
+}
+.information .op .operate-btn:focus{
+    outline: none;
+}
+
+.information .op .operate-btn.follow{
+    background-color: #ffffff;
+    color: #fd4c5b;
+}
+.information .op .operate-btn.follow:hover{
+    background-color: #eee;
+}
+
+
+.head-list{
+    padding: 0 20px;
+}
+.head-list .tab {
+    border-bottom: 1px solid #eee;
+    height: 46px;
+}
+.head-list .tab a.active {
+    color: #fd4c5b;
+    border-bottom: 3px solid;
+}
+.head-list .tab a {
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 4px;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.content-view{
+    max-width: 100%;
+    min-height:400px;
+    padding: 0 20px;
+}
+.content-view .nothing{
+    color: #a4aab2;
+    overflow:hidden;
+    text-align: center;
+    padding-top: 180px;
+}
+
+
+.article-list .content-view .article-item .title{
+    color: #000;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.article-list .content-view .article-item .title:hover{
+    color: #fd4c5b;
+}
+
+.article-list .content-view .article-item .article-info{
+    color: #333;
+    height: 12px;
+    line-height: 12px;
+}
+
+.article-list .content-view .article-item .article-desc{
+    color: #a4aab2;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+    width: 90%;
+}
+
+.content-view .name{
+    color: #222222;
+    font-weight: 600;
+    line-height: 16px;
+    font-size: 16px;
+    vertical-align: middle;
+}
+.content-view .name:hover{
+    color: #fd4c5b;
+    cursor: pointer;
+}
+
+.fans-action-btn{
+    float: left;
+    width: 74px;
+    border: 1px solid #ccd0d7;
+    display: block;
+    line-height: 22px;
+    height: 22px;
+    margin-top: 20px;
+    font-size: 0;
+    color: #6d757a;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 12px;
+}
+.fans-action-btn:hover{
+    border-color: #fd4c5b;
+}
+
+.fans-action-btn:hover{
+    color: #fd4c5b;
+}
+
+.fans-action-btn.follow{
+    border: 1px solid #ccd0d7;
+    background-color: #eee;
+    border-radius: 4px;
+    width: 74px;
+}
+.fans-action-btn.follow:hover{
+    border-color: #fd4c5b;
+}
+
+.fav-header{
+    padding: 0 20px;
+}
+
+.fav-header .item {
+    display: inline-block;
+    font-size: 20px;
+    color: #222;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.fav-header .fav-info{
+    color: #a4aab2;
+}
+
+.un-fav{
+    float:left;
+    cursor: pointer;
+}
+.un-fav:hover{
+    color: #fd4c5b;
+}
+
