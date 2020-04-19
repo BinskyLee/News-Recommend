@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/letter.css}" />
+	<title>新闻推荐系统-通知</title>
+</head>
+<body>
+	<div class="my-container">
+		<!-- 头部 -->
+		<header class="bg-dark sticky-top" th:replace="index::header"></header>
+
+		<!-- 内容 -->
+		<div class="main p-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<div class="position-relative">
+							<!-- 选项 -->
+							<ul class="nav nav-tabs mb-3">
+								<li class="nav-item">
+									<a class="nav-link position-relative" th:href="@{/letter/list}">用户私信<span th:if="${letterUnreadCount != 0}" class="badge" th:utext="${letterUnreadCount}"></span></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link position-relative active" th:href="@{/notice/list}">系统通知<span class="badge" th:if="${noticeUnreadCount}" th:utext="${noticeUnreadCount}"></span></a>
+								</li>
+							</ul>
+						</div>
+				
+						<!-- 通知列表 -->
+						<ul class="list-unstyled">
+							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
+								<span class="badge" th:if="${commentNotice!=null}" th:utext="${commentNotice.unread==0?'':commentNtoice.unread}" ></span>
+								<img th:src="@{/img/reply.png}" class="mr-4 user-header" alt="通知图标">
+								<div class="media-body conversation">
+									<h6 class="mt-1 mb-2">
+										<span class="notice">评论</span>
+										<span class="float-right text-muted font-size-12" th:if="${commentNotice != null}" th:utext="${#dates.format(commentNotice.message.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+									</h6>
+									<div style="width: 638px" th:if="${commentNotice != null}">
+										<a th:href="@{/notice/detail/comment}">用户 <i th:utext="${commentNotice.user.username}"></i> 评论了你的<i th:utext="${commentNotice.entityType==1?'文章':'回复'}"></i></a>
+										<ul class=" d-inline-block font-size-12 float-right">
+											<li class="d-inline ml-2"><a class="letters-count">共 <i th:utext="${commentNotice.count}"></i> 条会话</a></li>
+										</ul>
+									</div>
+									<div style="width: 638px" th:if="${commentNotice == null}">
+										暂时还未有用户回复消息
+									</div>
+								</div>
+							</li>
+							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
+								<span class="badge" th:if="${likeNotice!=null}" th:utext="${likeNotice.unread==0?'':likeNtoice.unread}">3</span>
+								<img th:src="@{/img/like.png}" class="mr-4 user-header" alt="通知图标">
+								<div class="media-body conversation">
+									<h6 class="mt-1 mb-2">
+										<span class="notice">赞</span>
+										<span class="float-right text-muted font-size-12" th:if="${likeNotice != null}" th:utext="${#dates.format(likeNotice.message.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+									</h6>
+									<div th:if="${likeNotice != null}">
+										<a th:href="@{/notice/detail/like}">用户 <i th:utext="${likeNotice.user.username}"></i> 点赞了你的<i th:utext="${likeNotice.entityType==1?'文章':'回复'}"></i> ...</a>
+										<ul class="d-inline font-size-12 float-right">
+											<li class="d-inline ml-2"><a class="letters-count">共 <i th:utext="${likeNotice.count}"></i> 条会话</a></li>
+										</ul>
+									</div>
+									<div th:if="${likeNotice == null}">
+										暂时还未有用户点赞消息
+									</div>
+								</div>
+							</li>
+							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
+								<span class="badge" th:if="${followNotice!=null}" th:utext="${followNotice.unread==0?'':followNotice.unread}"></span>
+								<img th:src="@{/img/follow.png}" class="mr-4 user-header" alt="通知图标">
+								<div class="media-body conversation">
+									<h6 class="mt-1 mb-2">
+										<span class="notice">关注</span>
+										<span class="float-right text-muted font-size-12" th:if="${followNotice!=null}" th:utext="${#dates.format(followNotice.message.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+									</h6>
+									<div th:if="${followNotice!=null}">
+										<a th:href="@{/notice/detail/follow}">用户 <i th:utext="${followNotice.user.username}"></i> 关注了你 ...</a>
+										<ul class="d-inline font-size-12 float-right">
+											<li class="d-inline ml-2"><a class="letters-count">共 <i th:utext="${followNotice.count}"></i> 条会话</a></li>
+										</ul>
+									</div>
+									<div th:if="${followNotice==null}">
+										暂时还未有用户关注消息
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/letter.js}"></script>
+</body>
+</html>

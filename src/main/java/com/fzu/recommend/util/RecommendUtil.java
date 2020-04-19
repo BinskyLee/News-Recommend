@@ -1,12 +1,9 @@
 package com.fzu.recommend.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fzu.recommend.controller.UserController;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -109,10 +106,19 @@ public class RecommendUtil {
     }
 
     public static String htmlReplace(String str){
-        String regHtml="<[^>]+>"; //定义HTML标签的正则表达式
-        Pattern pHtml=Pattern.compile(regHtml,Pattern.CASE_INSENSITIVE);
-        Matcher mHtml=pHtml.matcher(str);
-        str = mHtml.replaceAll(""); //过滤html标签
+        String reg="<[^>]+>"; //定义HTML标签的正则表达式
+        Pattern pattern=Pattern.compile(reg,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        str = matcher.replaceAll(""); //过滤html标签
+        return str;
+    }
+
+    public static String imgReplace(String str){
+        String reg="<figure[^>]*?>[\\s\\S]*?<\\/figure>";
+        Pattern pattern=Pattern.compile(reg,Pattern.CASE_INSENSITIVE);
+        Matcher matcher= pattern.matcher(str);
+        str = matcher.replaceAll(""); //过滤html标签
+        System.out.println(str);
         return str;
     }
 

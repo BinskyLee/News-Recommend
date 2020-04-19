@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>新闻推荐系统-激活账号</title>
+</head>
+<body>
+	<div>
+		<p>欢迎! <span th:text="${username}">username</span></p>
+		<p>
+			感谢您的注册，请点击这里激活您的帐号：<br>
+			<a th:href="${url}" target="_blank" th:text="${url}"></a>,
+		</p>
+		<p>
+			祝您使用愉快！
+		</p>
+	</div>
+</body>
+</html>

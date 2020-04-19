@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<title>新闻推荐系统-帐号设置</title>
+</head>
+<body>
+	<div class="my-container">
+		<!-- 头部 -->
+		<header th:replace="index::header"></header>
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container p-5 mt-3 mb-3">
+				<!-- 上传头像 -->
+				<h6 class="text-left border-bottom pb-2 font-color">上传头像</h6>
+				<div class="avatar-div mt-4 text-center">
+					<span class="avatar-holder">
+						<img th:src="${loginUser.headerUrl}" id="avatar-img" alt="" class="avatar-img">
+					</span>
+				</div>
+				<form class="mt-5" method="post" id="header-form" enctype="multipart/form-data" th:action= "@{/user/upload}">
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<div class="custom-file">
+								<input name="headerImg"  type="file" th:class="|custom-file-input file-input-style ${msg!=null?'is-invalid':''}|" id="head-image" lang="es">
+								<label class="custom-file-label img-label" for="head-image" data-browse="文件">选择一张图片</label>
+								<div class="invalid-feedback" id="invalid-img" th:text="${imgMsg}">错误信息</div>
+							</div>		
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8 text-center">
+							<button type="submit" id="img-button" class="btn submit-button text-white form-control">立即上传</button>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+				</form>
+				<!-- 修改密码 -->
+				<h6 class="text-left border-bottom pb-2 mt-5 font-color">修改密码</h6>
+				<div id="div-alert"></div>
+				<form class="mt-5" method="post">
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" name="old-password" id="old-password" placeholder="请输入原始密码" >
+							<div class="invalid-feedback" id="invalid-old-password">原密码验证</div>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" name="new-password" id="new-password" placeholder="请输入新的密码">
+							<div class="invalid-feedback" id="invalid-new-password">新密码验证</div>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="请确认新的密码">
+							<div class="invalid-feedback" id="invalid-confirm-password">确认密码验证</div>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>				
+					<div class="form-group row mt-4">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8 text-center">
+							<button type="button" class="btn submit-button text-white form-control" onclick="reset_password(); return false">立即保存</button>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+				</form>				
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/setting.js}"></script>
+	<script>
+		$(function(){
+			bsCustomFileInput.init();
+		});
+	</script>
+</body>
+</html>

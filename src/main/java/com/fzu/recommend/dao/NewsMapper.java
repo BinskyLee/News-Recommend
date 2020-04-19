@@ -21,5 +21,9 @@ public interface NewsMapper {
 
     int updateCommentCount(int id, int commentCount);
 
+    int updateKeywords(int id, String keywords);
+
+    int updateContent(int id, String content);
+
 
 }

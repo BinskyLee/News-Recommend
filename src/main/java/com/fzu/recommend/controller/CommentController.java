@@ -64,6 +64,13 @@ public class CommentController implements RecommendConstant {
                     .setEntityUserId(targetId);
             eventProducer.fireEvent(event);
         }
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(comment.getUserId())
+                .setEntityType(ENTITY_TYPE_NEWS)
+                .setEntityId(newsId);
+        eventProducer.fireEvent(event);
+
         return "redirect:/news/detail/" + newsId;
     }
 

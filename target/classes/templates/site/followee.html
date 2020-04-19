@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/profile.css}" />
+	<title>新闻推荐系统-关注列表</title>
+</head>
+<body>
+	<div class="my-container">
+		<!-- 头部 -->
+<!--		<header class="bg-dark sticky-top" th:replace="profile::information"></header>-->
+		<!-- 内容 -->
+		<!--新闻列表 -->
+		<div class="data-tab">
+			<ul class="list-unstyled news-list">
+				<li class="media pb-2 pt-2 mb-2 border-bottom"  th:each="map:${news}">
+					<div class="media-body">
+						<h5 class="mt-0 mb-0" style="width: 600px">
+							<a class="wrap-content"  target="_blank" th:href="@{|/news/detail/${map.news.id}|}" th:title="${map.news.title}" th:utext="${map.news.title}"></a>
+						</h5>
+						<div class="article-desc mt-1 mb-2 wrap-content" style="width: 600px" th:utext="${map.news.content}"></div>
+						<div class="article-info-bar text-muted font-size-12">
+							<a class="up-content mr-5" th:href="@{|/user/profile/${map.user.id}|}" target="_blank">
+												<span class="face-holder">
+													<img th:src="${map.user.headerUrl}" class="face-img">
+												</span>
+								<span class="nick-name" th:utext="${map.user.username}">宾斯基</span>
+							</a>
+							发布于 <label th:utext="${#dates.format(map.news.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</label>
+							<ul class="d-inline float-right">
+								<li class="d-inline ml-2">浏览 111</li>
+								<li class="d-inline ml-2">|</li>
+								<li class="d-inline ml-2">赞 <i th:utext="${map.likeCount}"></i></li>
+								<li class="d-inline ml-2">|</li>
+								<li class="d-inline ml-2">回复 7</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 分页 -->
+		<div class="page" th:if="${page.total > 1}" data-th-attr="path='/followee',bond='.data-tab'">
+			<nav class="mt-5"  th:fragment="page-nav">
+				<ul class="pagination justify-content-center">
+					<li th:class="|page-item | ${page.current==1?'disabled':''" data-th-classappend="${page.current==1?'disabled':''}">
+						<a class="page-link" href="javascript:void(0)"
+						data-th-attr="pageIndex=1">首页</a>
+					</li>
+					<li class="page-item" data-th-classappend="${page.current==1?'disabled':''}">
+						<a class="page-link" href="javascript:void(0)"
+						   data-th-attr="pageIndex=${page.current}-1">上一页</a>
+					</li>
+					<li class="page-item" data-th-claassappend="${i==page.current?'active':''}" th:each="i:${#numbers.sequence(page.from, page.to)}">
+						<a class="page-link" href="javascript:void(0)"
+						   data-th-attr="pageIndex=${i}" th:text="${i}"></a>
+					</li>
+					<li class="page-item" data-th-claassappend="${page.current==page.total?'disabled':''}">
+						<a class="page-link" href="javascript:void(0)"
+						   data-th-attr="pageIndex=${page.current}+1">下一页</a>
+					</li>
+					<li class="page-item" data-th-claassappend="${page.current==page.total?'disabled':''}">
+						<a class="page-link" href="javascript:void(0)"
+						   data-th-attr="pageIndex=${page.total}">末页</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
+	<script th:src="@{/js/letter.js}"></script>
+	<script th:src="@{/js/page.js}"></script>
+
+
+
+</body>
+</html>

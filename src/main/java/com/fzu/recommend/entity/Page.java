@@ -72,7 +72,7 @@ public class Page {
      * @return
      */
     public int getFrom(){
-        int from = current - 2;
+        int from = current - 3;
         return from < 1 ? 1 : from;
     }
 
@@ -81,7 +81,7 @@ public class Page {
      * @return
      */
     public int getTo(){
-        int to = current + 2;
+        int to = current + 3;
         int total = getTotal();
         return to > total ? total : to;
     }

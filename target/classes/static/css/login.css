@@ -1,0 +1,66 @@
+.main .container {
+	width: 720px;
+}
+
+.main .container >h3{
+	color: #fd4c5b;
+}
+
+.form-group >label{
+	font-family: 微软雅黑;
+	color: black;
+	font-size: 16px;
+}
+
+.form-group >div > input:focus{
+	border-color: #888888;
+	webkit-box-shadow:none;
+	box-shadow:none;
+}
+
+.submit-button{
+	background-color: #fd4c5b;
+}
+.submit-button:hover{
+	background-color: #EB4556;
+}
+.submit-button:focus{
+	border: none;
+	background-color: #fd4c5b;
+	webkit-box-shadow:none;
+	box-shadow:none;
+}
+
+.form-signin {
+	max-width: 400px;
+	padding: 19px 29px 29px;
+	margin: 100px auto 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+
+.avatar-div .avatar-holder{
+	border-radius: 100px;
+	height: 100px;
+	width: 100px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.avatar-div .avatar-holder .avatar-img{
+	height: 100px;
+	width: 100px;
+	border: none;
+	vertical-align: middle;
+}
+
+.img-label{
+	overflow:hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

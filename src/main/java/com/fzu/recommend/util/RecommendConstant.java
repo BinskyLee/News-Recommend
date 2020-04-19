@@ -48,12 +48,18 @@ public interface RecommendConstant {
     String TOPIC_COMMENT = "comment";
 
     /**
-     * 点赞
+     * 主题：发布
+     */
+    String TOPIC_PUBLISH = "publish";
+
+
+    /**
+     * 主题：点赞
      */
     String TOPIC_LIKE = "like";
 
     /**
-     * 关注
+     * 主题：关注
      */
     String TOPIC_FOLLOW = "follow";
 
@@ -61,5 +67,7 @@ public interface RecommendConstant {
      * 系统用户ID
      */
     int SYSTEM_USER_ID = 1;
+
+
 
 }

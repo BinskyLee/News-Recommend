@@ -1,10 +1,8 @@
 package com.fzu.recommend.controller;
 
 import com.fzu.recommend.annotation.LoginRequired;
-import com.fzu.recommend.entity.Comment;
-import com.fzu.recommend.entity.News;
-import com.fzu.recommend.entity.Page;
-import com.fzu.recommend.entity.User;
+import com.fzu.recommend.entity.*;
+import com.fzu.recommend.event.EventProducer;
 import com.fzu.recommend.service.*;
 import com.fzu.recommend.util.HostHolder;
 import com.fzu.recommend.util.RecommendConstant;
@@ -59,6 +57,9 @@ public class NewsController implements RecommendConstant {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
     @LoginRequired
@@ -82,6 +83,14 @@ public class NewsController implements RecommendConstant {
         if(map != null){
             return RecommendUtil.getJSONString(1, (String)map.get("msg"));
         }
+        //触发事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_NEWS)
+                .setEntityId(news.getId());
+        eventProducer.fireEvent(event);
+
         return "redirect:/";
     }
 

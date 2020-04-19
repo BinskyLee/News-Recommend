@@ -3,8 +3,12 @@ package com.fzu.recommend.event;
 import com.alibaba.fastjson.JSONObject;
 import com.fzu.recommend.entity.Event;
 import com.fzu.recommend.entity.Message;
+import com.fzu.recommend.entity.News;
+import com.fzu.recommend.service.ElasticsearchService;
 import com.fzu.recommend.service.MessageService;
+import com.fzu.recommend.service.NewsService;
 import com.fzu.recommend.util.RecommendConstant;
+import com.fzu.recommend.util.RecommendUtil;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,11 @@ public class EventConsumer implements RecommendConstant {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private ElasticsearchService elasticsearchService;
+    @Autowired
+    private NewsService newsService;
 
     @KafkaListener(topics = {TOPIC_COMMENT, TOPIC_LIKE, TOPIC_FOLLOW})
     public void handleMessage(ConsumerRecord record){
@@ -51,8 +60,25 @@ public class EventConsumer implements RecommendConstant {
         }
         message.setContent(JSONObject.toJSONString(content));
         messageService.addMessage(message);
-
-
-
     }
+
+    @KafkaListener(topics = {TOPIC_PUBLISH})
+    public void handlePublishMessage(ConsumerRecord record){
+        if(record == null || record.value() == null){
+            logger.error("消息的内容为空");
+            return;
+        }
+        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
+        if(event == null){
+            logger.error("消息格式错误");
+            return;
+        }
+        News news = newsService.findNewsById(event.getEntityId());
+        news.setContent(RecommendUtil.htmlReplace(news.getContent()));
+        elasticsearchService.saveNews(news);
+        newsService.updateKeywords(news); //获取关键词
+    }
+
+
+
 }
