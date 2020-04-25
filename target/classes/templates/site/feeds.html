@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/feeds.css}" />
+    <title>新闻推荐系统-关注动态</title>
+</head>
+<body>
+<div class="my-container">
+    <!-- 头部 -->
+    <header class="bg-dark sticky-top" th:replace="index::header"></header>
+    <!-- 内容 -->
+    <div class="main">
+        <div class="container">
+            <div class="feed-list">
+                <ul class="list-style">
+                    <li class="media feed-card mt-2 mb-3" th:each="map:${list}">
+                        <a th:href="@{|/user/profile/${map.user.id}|}" target="_blank">
+                            <img th:src="${map.user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
+                        </a>
+                        <div class="media-body">
+                            <div class="user mt-0">
+                                <a th:href="@{|/user/profile/${map.user.id}|}"  class="name" target="_blank" th:utext="${map.user.username}"></a>
+                            </div>
+                            <div class="time" th:utext="${#dates.format(map.news.createTime, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            <div class="article-container">
+                                <h6 class="mt-1 mb-0" style="width: 600px">
+                                    <a class="wrap-content"  target="_blank" th:href="@{|news/detail/${map.news.id}|}" th:title="${map.news.title}" th:utext="${map.news.title}" ></a>
+                                </h6>
+                                <div class="article-desc mt-1 wrap-content" th:utext="${map.news.content}"  th:title="${map.news.content}" style="width: 600px"></div>
+                            </div>
+                            <div class="article-info text-muted font-size-12 mb-2">
+                                <span><i th:utext="${map.news.clickCount}"></i>人浏览</span>
+                                <span class="ml-1">|</span>
+                                <span class="ml-1"><i th:utext="${map.news.commentCount}"></i>人评论</span>
+                                <span class="ml-1">|</span>
+                                <span class="ml-1"><i th:utext="${map.likeCount}"></i>人点赞</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <nav th:replace="index::page-nav"></nav>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/global.js}"></script>
+</body>
+</html>

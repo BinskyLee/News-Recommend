@@ -6,10 +6,7 @@ import com.fzu.recommend.annotation.LoginRequired;
 import com.fzu.recommend.entity.News;
 import com.fzu.recommend.entity.Page;
 import com.fzu.recommend.entity.User;
-import com.fzu.recommend.service.FollowService;
-import com.fzu.recommend.service.LikeService;
-import com.fzu.recommend.service.NewsService;
-import com.fzu.recommend.service.UserService;
+import com.fzu.recommend.service.*;
 import com.fzu.recommend.util.HostHolder;
 import com.fzu.recommend.util.RecommendConstant;
 import com.fzu.recommend.util.RecommendUtil;
@@ -60,6 +57,12 @@ public class UserController implements RecommendConstant {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private DataService dataService;
+
+    @Autowired
+    private RecommendService recommendService;
 
     @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
@@ -120,20 +123,21 @@ public class UserController implements RecommendConstant {
         if(user == null){
             throw new RuntimeException("该用户不存在");
         }
+        int newsCount = newsService.findNewsRows(userId, 0);
         //用户
         model.addAttribute("user", user);
         model.addAttribute("followeeCount", followService.findFolloweeCount(userId, ENTITY_TYPE_USER));
         model.addAttribute("followerCount", followService.findFollowerCount(ENTITY_TYPE_USER, userId));
-        model.addAttribute("newsCount", newsService.findNewsRows(userId));
+        model.addAttribute("newsCount", newsCount);
         boolean hasFollowed = hostHolder.getUser() == null ? false :
                 followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
         model.addAttribute("hasFollowed", hasFollowed);
         //投稿新闻
         Page newsPage = new Page();
         newsPage.setPath("/user/profile/" + userId + "/article");
-        newsPage.setRows(newsService.findNewsRows(userId));
-        newsPage.setLimit(5);
-        List<News> newsList = newsService.findNews(userId, newsPage.getOffset(), newsPage.getLimit());
+        newsPage.setRows(newsCount);
+        newsPage.setLimit(10);
+        List<News> newsList = newsService.findNews(userId, newsPage.getOffset(), newsPage.getLimit(), 0, 0);
         List<Map<String, Object>> newsVOList = new ArrayList<>();
         for(News news : newsList){
             Map<String, Object> map = new HashMap<>();
@@ -176,12 +180,13 @@ public class UserController implements RecommendConstant {
         newsPage.setPath("/user/profile/" + userId + "/article");
         newsPage.setLimit(5);
         newsPage.setCurrent(current);
-        newsPage.setRows(newsService.findNewsRows(userId));
-        List<News> newsList = newsService.findNews(userId, newsPage.getOffset(), newsPage.getLimit());
+        newsPage.setRows(newsService.findNewsRows(userId, 0));
+        List<News> newsList = newsService.findNews(userId, newsPage.getOffset(), newsPage.getLimit(), 0, 0);
         List<Map<String, Object>> newsVOList = new ArrayList<>();
         for(News news : newsList){
             Map<String, Object> map = new HashMap<>();
             news.setContent(RecommendUtil.htmlReplace(news.getContent()));
+            news.setClickCount((int)dataService.getViewCount(news.getId(), news.getClickCount()));
             map.put("news", news);
             map.put("likeCount", likeService.findEntityLikeCount(ENTITY_TYPE_NEWS, news.getId()));
             newsVOList.add(map);
@@ -189,6 +194,27 @@ public class UserController implements RecommendConstant {
         model.addAttribute("newsList", newsVOList);
         model.addAttribute("newsPage",newsPage);
         return new ModelAndView("/site/profile::#article-content-view");
+    }
+
+    @RequestMapping(path = "/feeds", method = RequestMethod.GET)
+    @LoginRequired
+    public String getFeedsPage(Model model, Page page){
+        page.setPath("/feeds");
+        page.setRows((int)recommendService.getFeedsCount(hostHolder.getUser().getId()));
+        page.setLimit(10);
+        List<News> list = recommendService.getNewsFeeds(hostHolder.getUser().getId(), page.getOffset(), page.getLimit());
+        List<Map<String, Object>> newsVOList = new ArrayList<>();
+        for(News news : list){
+            Map<String, Object> newsVO = new HashMap<>();
+            news.setClickCount((int)dataService.getViewCount(news.getId(), news.getClickCount()));
+            news.setContent(RecommendUtil.htmlReplace(news.getContent()));
+            newsVO.put("likeCount", likeService.findEntityLikeCount(ENTITY_TYPE_NEWS, news.getId()));
+            newsVO.put("news", news);
+            newsVO.put("user", userService.findUserById(news.getUserId()));
+            newsVOList.add(newsVO);
+        }
+        model.addAttribute("list", newsVOList);
+        return "/site/feeds";
     }
 
     private List<Map<String,Object>> getUserVOList(List<User> users){
@@ -200,9 +226,12 @@ public class UserController implements RecommendConstant {
             map.put("followerCount", followService.findFollowerCount(user.getId(), ENTITY_TYPE_USER));
             map.put("hasFollowed", hostHolder.getUser() == null ? false :
                     followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, user.getId()));
-            map.put("newsCount", newsService.findNewsRows(user.getId()));
+            map.put("newsCount", newsService.findNewsRows(user.getId(), 0));
             list.add(map);
         }
         return list;
     }
+
+
+
 }

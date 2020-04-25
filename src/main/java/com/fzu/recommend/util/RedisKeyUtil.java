@@ -10,6 +10,12 @@ public class RedisKeyUtil {
     private static final String PREFIX_KAPTCHA = "kaptcha";
     private static final String PREFIX_TICKET = "ticket";
     private static final String PREFIX_SIMILARITY = "similarity";
+    private static final String PREFIX_VIEW = "view";
+    private static final String PREFIX_ACTION = "action";
+    private static final String PREFIX_HISTORY = "history";
+    private static final String PREFIX_RECOMMEND = "recommend";
+    private static final String PREFIX_TAG = "keyword";
+    private static final String PREFIX_FEEDS = "feeds";
 
 
     //某个实体的赞
@@ -58,11 +64,50 @@ public class RedisKeyUtil {
         return PREFIX_TICKET + SPLIT + userId;
     }
 
-    // 相似度
-    public static String getSimilarityKey(int newsId){
-        return PREFIX_SIMILARITY + SPLIT + newsId;
+    // 文章相似度
+    public static String getNewsSimKey(int newsId){
+        return PREFIX_SIMILARITY + SPLIT + "news" + SPLIT + newsId;
     }
 
+    // 用户相似度
+    public static String getUserSimKey(int userId){
+        return PREFIX_SIMILARITY + SPLIT + "user" + SPLIT + userId;
+    }
+
+    // 点击量
+    public static String getViewKey(int newsId){
+        return PREFIX_VIEW + SPLIT + newsId;
+    }
+
+    // 获取点击量前缀
+    public static String getViewPrefix(){
+        return PREFIX_VIEW + SPLIT;
+    }
+
+    // 获取近期操作过的文章
+    public static String getActionNewsKey(){
+        return PREFIX_ACTION + SPLIT + "news";
+    }
+
+    // 用户浏览过的新闻
+    public static String getHistoryKey(int userId){
+        return PREFIX_HISTORY + SPLIT  + userId;
+    }
+
+    // 用户的推荐列表
+    public static String getRecommendKey(int userId){
+        return PREFIX_RECOMMEND + SPLIT + userId;
+    }
+
+    // 获取关键词列表
+    public static String getTagKey(String keyword){
+        return PREFIX_TAG + SPLIT + keyword;
+    }
+
+    // 获取Feeds
+    public static String getFeedsKey(int userId){
+        return PREFIX_FEEDS + SPLIT + SPLIT;
+    }
 
 
 }

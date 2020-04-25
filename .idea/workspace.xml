@@ -1,28 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="531166a5-5476-42aa-ba58-2c7456fd5580" name="Default Changelist" comment="Version 0.4">
+    <list default="true" id="531166a5-5476-42aa-ba58-2c7456fd5580" name="Default Changelist" comment="Version 0.5">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ansj_ansj_seg_5_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_nlpcn_nlp_lang_1_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/recommend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recommend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/RecommendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/RecommendApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/FavoriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/FavoriteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/FollowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/FollowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/LikeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/NewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/NewsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/dao/NewsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/dao/NewsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/entity/News.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/entity/News.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/entity/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/entity/Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/event/EventConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/event/EventConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/ElasticsearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/ElasticsearchService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/NewsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/NewsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/service/RecommendService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RecommendConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RecommendConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RecommendUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RecommendUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RedisKeyUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fzu/recommend/util/RedisKeyUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/news-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/news-mapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/news-detail.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/news-detail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/html/student.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/html/student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/news-detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/news-detail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/admin/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/admin/data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/follower.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/follower.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/forget.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/forget.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/my-post.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/my-post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/my-reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/my-reply.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/news-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/news-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/notice.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/notice.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/ElasticsearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/ElasticsearchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/MapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/MapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/ProjectPrepare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/InitProject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/RecommendTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fzu/recommend/RecommendTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/CommentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/FavoriteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/FavoriteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/FollowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/FollowController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/HomeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/LikeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/LikeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/NewsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/NewsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/dao/NewsMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/dao/NewsMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/entity/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/entity/Page.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/event/EventConsumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/event/EventConsumer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/ElasticsearchService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/ElasticsearchService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/ElasticsearchService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/ElasticsearchService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/NewsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/NewsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/RecommendService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/RecommendService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/RecommendService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/service/RecommendService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RecommendConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RecommendConstant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RecommendUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RecommendUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RedisKeyUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fzu/recommend/util/RedisKeyUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/news-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/news-mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/html/student.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/html/student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/news-detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/news-detail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/admin/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/admin/data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/follower.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/follower.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/forget.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/forget.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/my-post.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/my-post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/my-reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/my-reply.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/news-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/news-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/notice.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/notice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/ElasticsearchTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/ElasticsearchTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/MapperTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/MapperTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/ProjectPrepare.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/RecommendTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/fzu/recommend/RecommendTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,11 +102,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -92,6 +147,11 @@
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Graduation Project\recommend\src\main\resources\templates" />
+      <recent name="D:\Graduation Project\recommend\src\main\resources\static\css" />
+      <recent name="D:\Graduation Project\recommend\src\main\resources\static\img" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Graduation Project\recommend\src\main\resources\static\img" />
       <recent name="D:\Graduation Project\recommend\src\main\resources\static\js" />
@@ -99,14 +159,9 @@
       <recent name="D:\Graduation Project\recommend\src\main\resources" />
       <recent name="D:\Graduation Project\recommend\src\main\resources\templates" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Graduation Project\recommend\src\main\resources\templates" />
-      <recent name="D:\Graduation Project\recommend\src\main\resources\static\css" />
-      <recent name="D:\Graduation Project\recommend\src\main\resources\static\img" />
-    </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProjectPrepare.testSimilarity">
-    <configuration name="ProjectPrepare.initKeywords" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.InitProject.initUser">
+    <configuration name="InitProject.initEsInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="recommend" />
       <extension name="coverage">
         <pattern>
@@ -115,14 +170,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.fzu.recommend" />
-      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.ProjectPrepare" />
-      <option name="METHOD_NAME" value="initKeywords" />
+      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.InitProject" />
+      <option name="METHOD_NAME" value="initEsInsert" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectPrepare.initNewsSimilarity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InitProject.initNewsSimilarity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="recommend" />
       <extension name="coverage">
         <pattern>
@@ -131,14 +186,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.fzu.recommend" />
-      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.ProjectPrepare" />
+      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.InitProject" />
       <option name="METHOD_NAME" value="initNewsSimilarity" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectPrepare.testEsInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="InitProject.initUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="recommend" />
       <extension name="coverage">
         <pattern>
@@ -147,30 +202,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.fzu.recommend" />
-      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.ProjectPrepare" />
-      <option name="METHOD_NAME" value="testEsInsert" />
+      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.InitProject" />
+      <option name="METHOD_NAME" value="initUser" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectPrepare.testSimilarity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="recommend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.fzu.recommend.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.fzu.recommend" />
-      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.ProjectPrepare" />
-      <option name="METHOD_NAME" value="testSimilarity" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RecommendTest.testKeywords" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RecommendTest.testMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="recommend" />
       <extension name="coverage">
         <pattern>
@@ -180,7 +219,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.fzu.recommend" />
       <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.RecommendTest" />
-      <option name="METHOD_NAME" value="testKeywords" />
+      <option name="METHOD_NAME" value="testMap" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecommendTest.testUserSim" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="recommend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fzu.recommend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.fzu.recommend" />
+      <option name="MAIN_CLASS_NAME" value="com.fzu.recommend.RecommendTest" />
+      <option name="METHOD_NAME" value="testUserSim" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -202,11 +257,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProjectPrepare.testSimilarity" />
-        <item itemvalue="JUnit.ProjectPrepare.initNewsSimilarity" />
-        <item itemvalue="JUnit.ProjectPrepare.initKeywords" />
-        <item itemvalue="JUnit.ProjectPrepare.testEsInsert" />
-        <item itemvalue="JUnit.RecommendTest.testKeywords" />
+        <item itemvalue="JUnit.InitProject.initUser" />
+        <item itemvalue="JUnit.InitProject.initEsInsert" />
+        <item itemvalue="JUnit.InitProject.initNewsSimilarity" />
+        <item itemvalue="JUnit.RecommendTest.testMap" />
+        <item itemvalue="JUnit.RecommendTest.testUserSim" />
       </list>
     </recent_temporary>
   </component>
@@ -263,6 +318,11 @@
       <workItem from="1586749007630" duration="7848000" />
       <workItem from="1587100315672" duration="21013000" />
       <workItem from="1587126835522" duration="5103000" />
+      <workItem from="1587297138228" duration="14312000" />
+      <workItem from="1587366157754" duration="21951000" />
+      <workItem from="1587427794290" duration="42304000" />
+      <workItem from="1587734843814" duration="11417000" />
+      <workItem from="1587779468292" duration="31202000" />
     </task>
     <task id="LOCAL-00001" summary="Version 0.1">
       <created>1585272755798</created>
@@ -313,7 +373,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586524414069</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Version 0.5">
+      <created>1587297386907</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587297386907</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,7 +391,8 @@
     <MESSAGE value="Version 0.2" />
     <MESSAGE value="Version 0.3" />
     <MESSAGE value="Version 0.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 0.4" />
+    <MESSAGE value="Version 0.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 0.5" />
   </component>
   <component name="WindowStateProjectService">
     <state x="233" y="0" key="#Auto_Import" timestamp="1586698535923">
@@ -347,18 +415,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1585575774569" />
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1586695982134">
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1587791908417">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1586695982134" />
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1587791908417" />
+    <state x="396" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1587386038195">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="396" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.680@0.0.1280.680" timestamp="1587386038195" />
     <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586260126526">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1586260126526" />
-    <state x="165" y="0" key="CommitChangelistDialog2" timestamp="1587297309803">
+    <state x="165" y="0" key="CommitChangelistDialog2" timestamp="1587297379536">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="165" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1587297309803" />
+    <state x="165" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1587297379536" />
     <state x="421" y="82" key="FileChooserDialogImpl" timestamp="1585272513568">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -367,38 +439,38 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="437" y="266" width="375" height="206" key="Github.CreateGistDialog/0.0.1280.680@0.0.1280.680" timestamp="1586755321361" />
-    <state width="1237" height="139" key="GridCell.Tab.0.bottom" timestamp="1587131985432">
+    <state width="1237" height="194" key="GridCell.Tab.0.bottom" timestamp="1587812703603">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="139" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587131985432" />
-    <state width="1237" height="139" key="GridCell.Tab.0.center" timestamp="1587131985432">
+    <state width="1237" height="194" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587812703603" />
+    <state width="1237" height="194" key="GridCell.Tab.0.center" timestamp="1587812703603">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="139" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1587131985432" />
-    <state width="1237" height="139" key="GridCell.Tab.0.left" timestamp="1587131985432">
+    <state width="1237" height="194" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1587812703603" />
+    <state width="1237" height="194" key="GridCell.Tab.0.left" timestamp="1587812703603">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="139" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1587131985432" />
-    <state width="1237" height="139" key="GridCell.Tab.0.right" timestamp="1587131985432">
+    <state width="1237" height="194" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1587812703603" />
+    <state width="1237" height="194" key="GridCell.Tab.0.right" timestamp="1587812703603">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="139" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1587131985432" />
-    <state width="1237" height="103" key="GridCell.Tab.1.bottom" timestamp="1587131985406">
+    <state width="1237" height="194" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1587812703603" />
+    <state width="1237" height="194" key="GridCell.Tab.1.bottom" timestamp="1587808819010">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="103" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587131985406" />
-    <state width="1237" height="103" key="GridCell.Tab.1.center" timestamp="1587131985406">
+    <state width="1237" height="194" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587808819010" />
+    <state width="1237" height="194" key="GridCell.Tab.1.center" timestamp="1587808819010">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="103" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1587131985406" />
-    <state width="1237" height="103" key="GridCell.Tab.1.left" timestamp="1587131985405">
+    <state width="1237" height="194" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1587808819010" />
+    <state width="1237" height="194" key="GridCell.Tab.1.left" timestamp="1587808819010">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="103" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1587131985405" />
-    <state width="1237" height="103" key="GridCell.Tab.1.right" timestamp="1587131985406">
+    <state width="1237" height="194" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1587808819010" />
+    <state width="1237" height="194" key="GridCell.Tab.1.right" timestamp="1587808819010">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="103" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1587131985406" />
+    <state width="1237" height="194" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1587808819010" />
     <state width="1237" height="157" key="GridCell.Tab.2.bottom" timestamp="1586765130460">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -427,10 +499,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1280.680@0.0.1280.680" timestamp="1586394755803" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1587297318914">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1587297404959">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587297318914" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1587297404959" />
     <state x="371" y="106" key="extract.method.dialog" timestamp="1585623626441">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -439,10 +511,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1586225422127" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1587131763674">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1587827345957">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1587131763674" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1587827345957" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

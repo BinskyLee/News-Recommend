@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fzu.recommend.dao.ActionLogMapper">
+    <sql id="insertFields">
+        user_id, news_id, action_type, action_time
+    </sql>
+
+    <sql id="selectFields">
+        id, user_id, news_id, action_type, action_time
+    </sql>
+
+    <insert id="insertAction" parameterType="ActionLog" keyProperty="id">
+        insert into action_log (<include refid="insertFields"></include>)
+        values (#{userId}, #{newsId}, #{actionType}, #{actionTime})
+    </insert>
+
+    <select id="selectUserIds" resultType="int">
+        select distinct user_id from action_log;
+    </select>
+
+    <select id="selectNewsIds" resultType="int">
+        select distinct news_id from action_log;
+    </select>
+
+    <select id="selectLatestLog" resultType="ActionLog">
+        select <include refid="selectFields"></include>
+        from action_log
+        where id in(
+            select max(id) from action_log
+            where user_id = #{userId}
+            group by user_id, news_id
+        )
+    </select>
+
+    <select id="selectReadUserIds" resultType="int">
+        select distinct user_id from action_log
+        where news_id = #{newsId}
+    </select>
+
+    <select id="selectUserLog" resultType="ActionLog">
+        select  <include refid="selectFields"></include>
+        from action_log
+        where user_id = #{userId}
+    </select>
+</mapper>

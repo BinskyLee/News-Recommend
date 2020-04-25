@@ -71,7 +71,7 @@
 									<span class="ml-1">|</span>
 									<span class="like ml-1"><i th:utext="${map.likeCount}">200</i>人点赞</span>
 									<span class="ml-1">|</span>
-									<span class="view ml-1"><i>2000</i>人浏览</span>
+									<span class="view ml-1"><i th:utext="${map.news.clickCount}"></i>人浏览</span>
 								</div>
 								<div class="article-desc wrap-content mt-1"  th:utext="${map.news.content}"></div>
 							</div>

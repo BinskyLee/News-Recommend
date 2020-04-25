@@ -9,11 +9,11 @@ import java.util.List;
 @Mapper
 public interface NewsMapper {
 
-    List<News> selectNews(int userId, int offset, int limit);
+    List<News> selectNews(int userId, int offset, int limit, int categoryId, int sort);
 
     //@Param注解用于给参数取别名
     //如果只有一个参数，并且要使用动态条件，则必须用别名
-    int selectNewsRows(@Param("userId") int userId);
+    int selectNewsRows(int userId, int categoryId);
 
     int insertNews(News news);
 
@@ -24,6 +24,11 @@ public interface NewsMapper {
     int updateKeywords(int id, String keywords);
 
     int updateContent(int id, String content);
+
+    int updateScore(int id, double score);
+
+    int updateClickCount(int id, int clickCount);
+
 
 
 }

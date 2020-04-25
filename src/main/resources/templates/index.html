@@ -55,8 +55,8 @@
 									<a class="dropdown-item text-center" target="_blank" th:href="@{|/user/profile/${loginUser.id}|}">个人主页</a>
 									<a class="dropdown-item text-center" target="_blank" th:href="@{/user/setting}">修改信息</a>
 									<a class="dropdown-item text-center" target="_blank" th:href="@{/favorites}">我的收藏</a>
-									<a class="dropdown-item text-center" target="_blank" href="site/profile.html">我的动态</a>
-									<a class="dropdown-item text-center" target="_blank" th:href="@{/logout}">退出登录</a>
+									<a class="dropdown-item text-center" target="_blank" th:href="@{/user/feeds}">关注动态</a>
+									<a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
 									<div class="dropdown-divider"></div>
 									<span class="dropdown-item text-center text-secondary" >宾斯基</span>
 								</div>
@@ -78,31 +78,30 @@
 				<div class="row">
 					<!-- 左侧栏 -->
 					<div class="col-lg-2 d-none d-lg-block">
-						<div class="list-group side-bar category"  data-th-attr="categoryId=0" th:fragment="side-bar">
-							<a href="#" class="list-group-item active">推荐</a>
-							<a href="#" class="list-group-item">科技</a>
-							<a href="#" class="list-group-item">生活</a>
-							<a href="#" class="list-group-item">动画</a>
-							<a href="#" class="list-group-item">游戏</a>
-							<a href="#" class="list-group-item">娱乐</a>
-							<a href="#" class="list-group-item">体育</a>
-							<a href="#" class="list-group-item">财经</a>
-							<a href="#" class="list-group-item">国际</a>
-							<a href="#" class="list-group-item">军事</a>
+						<div class="list-group side-bar category" th:fragment="side-bar">
+							<a th:href="@{/index(categoryId=0)}" class="list-group-item" th:classappend="${categoryId==0?'active':''}">推荐</a>
+							<a th:href="@{/index(categoryId=1)}" class="list-group-item" th:classappend="${categoryId==1?'active':''}">科技</a>
+							<a th:href="@{/index(categoryId=2)}" class="list-group-item" th:classappend="${categoryId==2?'active':''}">生活</a>
+							<a th:href="@{/index(categoryId=3)}" class="list-group-item" th:classappend="${categoryId==3?'active':''}">动画</a>
+							<a th:href="@{/index(categoryId=4)}" class="list-group-item" th:classappend="${categoryId==4?'active':''}">游戏</a>
+							<a th:href="@{/index(categoryId=5)}" class="list-group-item" th:classappend="${categoryId==5?'active':''}">娱乐</a>
+							<a th:href="@{/index(categoryId=6)}" class="list-group-item" th:classappend="${categoryId==6?'active':''}">体育</a>
+							<a th:href="@{/index(categoryId=7)}" class="list-group-item" th:classappend="${categoryId==7?'active':''}">财经</a>
+							<a th:href="@{/index(categoryId=8)}" class="list-group-item" th:classappend="${categoryId==8?'active':''}">国际</a>
+							<a th:href="@{/index(categoryId=9)}" class="list-group-item" th:classappend="${categoryId==9?'active':''}">军事</a>
 						</div>
 					</div>
 					<!--中间栏 -->
 					<div class="col-lg-7 content-box">
 						<!--排序方式 -->
-						<div class="dropdown show sort-name">
+						<div th:if="${categoryId != 0}" class="dropdown show sort-name">
 							<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								默认排序
+								<label th:utext="${sortName==null?'默认排序':sortName}"></label>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-								<a class="dropdown-item" href="#">投稿时间排序</a>
-								<a class="dropdown-item" href="#">评论数最多</a>
-								<a class="dropdown-item" href="#">收藏数最多</a>
-								<a class="dropdown-item" href="#">点赞数最多</a>
+								<a class="dropdown-item" th:href="@{/index(categoryId=${categoryId}, sort=0)}">投稿时间排序</a>
+								<a class="dropdown-item" th:href="@{/index(categoryId=${categoryId}, sort=1)}">评论数最多</a>
+								<a class="dropdown-item" th:href="@{/index(categoryId=${categoryId}, sort=2)}">按热度排序</a>
 							</div>
 						</div>
 						<!--新闻列表 -->
@@ -122,42 +121,16 @@
 										</a>
 										发布于 <label th:utext="${#dates.format(map.news.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</label>
 										<ul class="d-inline float-right">
-											<li class="d-inline ml-2">浏览 111</li>
+											<li class="d-inline ml-2">浏览 <i th:utext="${map.news.clickCount}"></i></li>
 											<li class="d-inline ml-2">|</li>
 											<li class="d-inline ml-2">赞 <i th:utext="${map.likeCount}"></i></li>
 											<li class="d-inline ml-2">|</li>
-											<li class="d-inline ml-2">回复 7</li>
+											<li class="d-inline ml-2">回复 <i th:utext="${map.news.commentCount}"></i></li>
 										</ul>
 									</div>
 								</div>
 							</li>
 						</ul>
-<!--							<div class="page" th:if="${page.total > 1}">-->
-<!--								<nav class="mt-5"  th:fragment="page-nav">-->
-<!--									<ul class="pagination justify-content-center">-->
-<!--										<li class="page-item" th:classappend="${page.current==1?'disabled':''}">-->
-<!--											<a class="page-link" href="javascript:void(0)"-->
-<!--											   data-th-attr="pageIndex=${page.current}">首页</a>-->
-<!--										</li>-->
-<!--										<li class="page-item" th:classappend="${page.current==1?'disabled':''}">-->
-<!--											<a class="page-link" href="javascript:void(0)"-->
-<!--											   data-th-attr="pageIndex=${page.current}-1">上一页</a>-->
-<!--										</li>-->
-<!--										<li class="page-item" th:classappend="${i==page.current?'active':''}" th:each="i:${#numbers.sequence(page.from, page.to)}">-->
-<!--											<a class="page-link" href="javascript:void(0)"-->
-<!--											   data-th-attr="pageIndex=${i}" th:text="${i}"></a>-->
-<!--										</li>-->
-<!--										<li class="page-item" th:classappend="${page.current==page.total?'disabled':''}">-->
-<!--											<a class="page-link" href="javascript:void(0)"-->
-<!--											   data-th-attr="pageIndex=${page.current}+1">下一页</a>-->
-<!--										</li>-->
-<!--										<li class="page-item" th:classappend="${page.current==page.total?'disabled':''}">-->
-<!--											<a class="page-link" href="javascript:void(0)"-->
-<!--											   data-th-attr="pageIndex=${page.total}">末页</a>-->
-<!--										</li>-->
-<!--									</ul>-->
-<!--								</nav>-->
-<!--							</div>-->
 						<!-- 分页 -->
 						<nav class="mt-5" th:if="${page.total>1}" th:fragment="page-nav">
 							<ul class="pagination justify-content-center">
@@ -184,47 +157,11 @@
 						<div class="side-bar-card ">
 							<div class="card-title bd-bottom">近期热闻</div>
 							<ul class="rank-list">
-								<li class="item">
-									<span class="rank-index">1</span>
+								<li class="item" th:each="news:${hotNews}">
+									<span class="rank-index mr-1" th:utext="${newsStat.count}"></span>
 									<span class="rank-title">
-										<a href="#" target="_blank" class="rank-wrap-content" title="关于商业，给你一顿毒打。毒打毒打独大独大独大">关于商业，给你一顿毒打。毒打毒打大独大独大</a>
+										<a th:href="@{|/news/detail/${news.id}|}" target="_blank" class="rank-wrap-content" th:title="${news.title}" th:utext="${news.title}"></a>
 									</span>
-								</li>
-								<li class="item">
-									<span class="rank-index">2</span>
-									<a href="#" target="_blank">肖战粉丝偷袭AO3始末</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">3</span>
-									<a href="#" target="_blank">道歉和澄清</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">4</span>
-									<a href="#" target="_blank">关于商业，给你一顿毒打。</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">5</span>
-									<a href="#" target="_blank">肖战粉丝偷袭AO3始末</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">6</span>
-									<a href="#" target="_blank">道歉和澄清</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">7</span>
-									<a href="#" target="_blank">关于商业，给你一顿毒打。</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">8</span>
-									<a href="#" target="_blank">肖战粉丝偷袭AO3始末</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">9</span>
-									<a href="#" target="_blank">道歉和澄清</a>
-								</li>
-								<li class="item">
-									<span class="rank-index">10</span>
-									<a href="#" target="_blank">道歉和澄清</a>
 								</li>
 							</ul>
 						</div>

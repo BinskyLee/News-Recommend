@@ -71,12 +71,12 @@ public class MapperTest implements RecommendConstant {
 
     @Test
     public void testSelectNews(){
-        List<News> list = newsMapper.selectNews(1, 0, 10);
+        List<News> list = newsMapper.selectNews(1, 0, 10, 0 ,0);
         for(News news : list){
             System.out.println(news);
         }
 
-        int rows = newsMapper.selectNewsRows(1);
+        int rows = newsMapper.selectNewsRows(1, 0);
         System.out.println(rows);
     }
 

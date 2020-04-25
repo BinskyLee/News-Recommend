@@ -1,7 +1,11 @@
 package com.fzu.recommend;
 
 import com.fzu.recommend.entity.News;
+import com.fzu.recommend.recommend.UserSimilarity;
+import com.fzu.recommend.recommend.UserTag;
+import com.fzu.recommend.recommend.UserToUser;
 import com.fzu.recommend.service.NewsService;
+import com.fzu.recommend.util.EncodeUtil;
 import com.fzu.recommend.util.RecommendConstant;
 import com.fzu.recommend.util.RecommendUtil;
 import com.fzu.recommend.util.SensitiveFilter;
@@ -12,10 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +33,13 @@ public class RecommendTest implements RecommendConstant {
 
     @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private UserSimilarity userSimilarity;
+
+    @Autowired
+    private UserTag userTag;
+
 
     @Test
     public void testTime(){
@@ -58,10 +68,33 @@ public class RecommendTest implements RecommendConstant {
 
     @Test
     public void testKeywords(){
-        List<News> list = newsService.findNews(0, 1, Integer.MAX_VALUE);
+        List<News> list = newsService.findNews(0, 1, Integer.MAX_VALUE, 0 ,0);
         for(News news : list){
             news.setContent(RecommendUtil.imgReplace(news.getContent()));
-            newsService.updateKeywords(news);
+            String keywords = newsService.getKeywords(news);
+            newsService.updateKeywords(news.getId(), keywords);
         }
     }
+
+    @Test
+    public void testCharacter() throws UnsupportedEncodingException {
+        String str = "雅虎";
+        str = EncodeUtil.encode(str, "UTF-8");
+        System.out.println(str);
+        str = EncodeUtil.decode(str, "UTF-8");
+        System.out.println(str);
+    }
+
+    @Test
+    public void testUserSim(){
+        userSimilarity.calSimilarity();;
+    }
+
+    @Test
+    public void testMap(){
+        userTag.calUserTag();
+    }
+
 }
+
+

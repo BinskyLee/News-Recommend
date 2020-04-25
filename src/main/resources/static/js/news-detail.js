@@ -3,7 +3,7 @@ function check(fm){
     var box = fm.elements[0];
     var content = box.value;
     if(content.length == 0 || content == "") {
-        alert( "评论不能为空")
+        alert( "评论不能为空");
         return false;
     }else{
         return true;

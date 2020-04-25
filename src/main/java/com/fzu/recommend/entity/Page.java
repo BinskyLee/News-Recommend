@@ -5,7 +5,7 @@ public class Page {
     //当前页面
     private int current = 1;
     //显示上限
-    private int limit = 5;
+    private int limit = 10;
     //数据总数
     private int rows;
     //查询路径

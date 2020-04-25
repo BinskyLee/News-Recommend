@@ -15,18 +15,36 @@
     <select id="selectNews" resultType="News">
         select <include refid="selectFields"></include>
         from news
+        where 1=1
         <if test = "userId != 0">
-            where user_id = #{userId}
+            and user_id = #{userId}
         </if>
-        order by create_time desc
+        <if test="categoryId != 0">
+            and category_id = #{categoryId}
+        </if>
+        order by
+        <if test="sort == 0">
+             create_time
+        </if>
+        <if test="sort == 1">
+            comment_count
+        </if>
+        <if test="sort == 2">
+            score
+        </if>
+        desc
         limit #{offset}, #{limit}
     </select>
 
     <select id="selectNewsRows" resultType="int">
         select count(id)
         from news
+        where 1 = 1
         <if test = "userId != 0">
-            where user_id = #{userId}
+            and user_id = #{userId}
+        </if>
+        <if test="categoryId != 0">
+            and category_id = #{categoryId}
         </if>
     </select>
 
@@ -54,5 +72,12 @@
         update news set content = #{content} where id = #{id}
     </update>
 
+    <update id="updateScore">
+        update news set score = #{score} where id = #{id}
+    </update>
+
+    <update id="updateClickCount">
+        update news set click_count = #{clickCount} where id = #{id}
+    </update>
 
 </mapper>

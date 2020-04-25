@@ -11,9 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +118,27 @@ public class RecommendUtil {
         str = matcher.replaceAll(""); //过滤html标签
         System.out.println(str);
         return str;
+    }
+
+    public static String stringFilter(String str){
+        String regEx = "[`\\-~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——{}【】‘<>；：丨”“'。〒，、？「」•+͈]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.replaceAll("。");
+    }
+
+    public static Set intersection(Set s1, Set s2){
+        Set set = new HashSet();
+        set.addAll(s1);
+        set.retainAll(s2);
+        return set;
+    }
+
+    public static Set union(Set s1, Set s2){
+        Set set = new HashSet();
+        set.addAll(s1);
+        set.addAll(s2);
+        return set;
     }
 
 

@@ -3,8 +3,12 @@ package com.fzu.recommend.service;
 import com.fzu.recommend.dao.elasticsearch.NewsRepository;
 import com.fzu.recommend.entity.News;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.lucene.queries.function.FunctionScoreQuery;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -71,8 +75,6 @@ public class ElasticsearchService {
 
                     String title = hit.getSourceAsMap().get("title").toString();
                     news.setTitle(title);
-//                    String content = hit.getSourceAsMap().get("content") == null ? null : hit.getSourceAsMap().get("content").toString();
-//                    news.setContent(content);
                     String keywords = hit.getSourceAsMap().get("keywords") == null ? null : hit.getSourceAsMap().get("keywords").toString();
                     news.setKeywords(keywords);
 
@@ -103,7 +105,9 @@ public class ElasticsearchService {
                     }
                     if(StringUtils.isBlank(news.getContent())){
                         String content = hit.getSourceAsMap().get("content") == null ? null : hit.getSourceAsMap().get("content").toString();
-                        news.setContent(content.substring(0, 100) + "...");
+                        if(content.length() > 100) {
+                            news.setContent(content.substring(0, 100) + "...");
+                        }
                     }
                     list.add(news);
                 }

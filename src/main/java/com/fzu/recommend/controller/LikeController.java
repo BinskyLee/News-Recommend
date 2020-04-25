@@ -7,7 +7,9 @@ import com.fzu.recommend.service.LikeService;
 import com.fzu.recommend.util.HostHolder;
 import com.fzu.recommend.util.RecommendConstant;
 import com.fzu.recommend.util.RecommendUtil;
+import com.fzu.recommend.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +29,9 @@ public class LikeController implements RecommendConstant {
 
     @Autowired
     private EventProducer eventProducer;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
@@ -54,6 +59,17 @@ public class LikeController implements RecommendConstant {
                     .setEntityUserId(entityUserId)
                     .setData("newsId", newsId);
             eventProducer.fireEvent(event);
+        }
+        if(likeStatus == 1 && entityType == ENTITY_TYPE_NEWS){
+            // 触发记录行为日志事件
+            Event event = new Event()
+                    .setTopic(TOPIC_ACTION)
+                    .setUserId(hostHolder.getUser().getId())
+                    .setEntityType(ENTITY_TYPE_NEWS)
+                    .setEntityId(newsId)
+                    .setData("actionType", ACTION_TYPE_LIKE);
+            eventProducer.fireEvent(event);
+
         }
 
         return RecommendUtil.getJSONString(0, null, map);

@@ -234,13 +234,32 @@ em {
 	min-height: 550px;
 }
 
+.content-box .sort-name{
+	line-height: 25px;
+	font-size: 18px;
+	color: #222;
+}
+
+.content-box .sort-name ul {
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
+}
+
 .sort-name .dropdown-toggle{
 	text-align: center;
 	background: white;
+	cursor: pointer;
 	font-size: 14px;
 	padding-left: 0;
 	padding-top: 10px;
 }
+
+
 
 .sort-name .dropdown-toggle:hover{
 	color: #fd4c5b;
@@ -409,7 +428,6 @@ em {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-	text-align: center;
 	display: inline-block;
 	vertical-align: middle;
 }

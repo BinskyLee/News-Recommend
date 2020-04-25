@@ -1,0 +1,27 @@
+body{
+    background-color: #f4f5f7;
+}
+.main{
+    width:65%;
+    margin: 60px auto;
+    position: relative;
+}
+
+.feed-list .user .name{
+    font-size: 16px;
+}
+.feed-list .time{
+    color: #99a2aa;
+    font-size: 12px;
+}
+
+.feed-list .feed-card{
+    padding:25px;
+    font-family: Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
+    background-color: #fff;
+    font-size: 14px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+}

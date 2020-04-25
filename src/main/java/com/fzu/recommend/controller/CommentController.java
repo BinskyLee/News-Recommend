@@ -35,7 +35,7 @@ public class CommentController implements RecommendConstant {
     private EventProducer eventProducer;
 
     @Autowired
-    private NewsService newsServicel;
+    private NewsService newsService;
 
     @LoginRequired
     @RequestMapping(path = "/comment/add/{newsId}", method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class CommentController implements RecommendConstant {
         //触发评论事件
         int targetId = 0;
         if(comment.getEntityType() == ENTITY_TYPE_NEWS){
-            targetId = newsServicel.findNewsById(comment.getEntityId()).getUserId();
+            targetId = newsService.findNewsById(comment.getEntityId()).getUserId();
         }else if(comment.getEntityType() == ENTITY_TYPE_COMMENT){
             targetId = commentService.findCommentById(comment.getEntityId()).getUserId();
         }
@@ -64,12 +64,24 @@ public class CommentController implements RecommendConstant {
                     .setEntityUserId(targetId);
             eventProducer.fireEvent(event);
         }
+
         Event event = new Event()
                 .setTopic(TOPIC_PUBLISH)
                 .setUserId(comment.getUserId())
-                .setEntityType(ENTITY_TYPE_NEWS)
-                .setEntityId(newsId);
+                .setEntityType(comment.getEntityType())
+                .setEntityId(newsId)
+                .setData("publish", ENTITY_TYPE_COMMENT);
         eventProducer.fireEvent(event);
+
+        // 触发记录行为日志事件
+        event = new Event()
+                .setTopic(TOPIC_ACTION)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(ENTITY_TYPE_NEWS)
+                .setEntityId(newsId)
+                .setData("actionType", ACTION_TYPE_COMMENT);
+        eventProducer.fireEvent(event);
+
 
         return "redirect:/news/detail/" + newsId;
     }

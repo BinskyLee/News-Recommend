@@ -1,6 +1,11 @@
 package com.fzu.recommend.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public interface RecommendConstant {
+
 
     /**激活成功
      *
@@ -64,9 +69,50 @@ public interface RecommendConstant {
     String TOPIC_FOLLOW = "follow";
 
     /**
+     * 主题：动作
+     */
+    String TOPIC_ACTION = "action";
+
+
+    /**
      * 系统用户ID
      */
     int SYSTEM_USER_ID = 1;
+
+    /**
+     * 行为类型：浏览
+     */
+    int ACTION_TYPE_VIEW = 1;
+
+    /**
+     * 行为类型：点赞
+     */
+    int ACTION_TYPE_LIKE = 2;
+
+    /**
+     * 行为类型：评论
+     */
+    int ACTION_TYPE_COMMENT = 3;
+
+    /**
+     * 行为类型：收藏
+     */
+    int ACTION_TYPE_FAVORITE = 4;
+
+    /**
+     * 排序名
+     */
+    String[] sortName = {"投稿时间排序", "评论数排序", "热度排序", "收藏数排序", "点赞数排序"};
+
+    /**
+     * 分类名
+     */
+    String[] categoryName = {"推荐", "科技", "生活", "动画", "游戏", "娱乐", "体育", "财经", "国际", "军事"};
+
+
+
+
+
 
 
 

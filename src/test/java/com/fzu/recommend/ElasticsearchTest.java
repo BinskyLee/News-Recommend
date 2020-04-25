@@ -56,7 +56,7 @@ public class ElasticsearchTest {
 
     @Test
     public void testInsertList(){
-        List<News> list = newsMapper.selectNews(33, 0, 100);
+        List<News> list = newsMapper.selectNews(33, 0, 100, 0, 0);
         for(News news : list){
             news.setContent(RecommendUtil.htmlReplace(news.getContent()));
         }

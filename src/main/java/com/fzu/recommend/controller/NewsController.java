@@ -7,10 +7,12 @@ import com.fzu.recommend.service.*;
 import com.fzu.recommend.util.HostHolder;
 import com.fzu.recommend.util.RecommendConstant;
 import com.fzu.recommend.util.RecommendUtil;
+import com.fzu.recommend.util.RedisKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +60,16 @@ public class NewsController implements RecommendConstant {
     private FollowService followService;
 
     @Autowired
+    private DataService dataService;
+
+    @Autowired
     private EventProducer eventProducer;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private RecommendService recommendService;
 
     private static final Logger logger = LoggerFactory.getLogger(NewsController.class);
 
@@ -88,7 +99,8 @@ public class NewsController implements RecommendConstant {
                 .setTopic(TOPIC_PUBLISH)
                 .setUserId(user.getId())
                 .setEntityType(ENTITY_TYPE_NEWS)
-                .setEntityId(news.getId());
+                .setEntityId(news.getId())
+                .setData("publish", ENTITY_TYPE_NEWS);
         eventProducer.fireEvent(event);
 
         return "redirect:/";
@@ -121,7 +133,8 @@ public class NewsController implements RecommendConstant {
     }
 
     @RequestMapping(path = "/detail/{newsId}", method = RequestMethod.GET)
-    public ModelAndView getNews(@PathVariable("newsId") int newsId, Model model,
+    public ModelAndView getNews(HttpServletRequest request,
+                                @PathVariable("newsId") int newsId, Model model,
                                 @RequestParam(value = "current", defaultValue = "1", required = false) int current,
                                 @RequestParam(value = "commentId",  defaultValue = "0", required = false) int commentId,
                                 @RequestParam(value = "type", defaultValue = "0", required = false) int type){ //1评论分页、2回复分页
@@ -189,6 +202,18 @@ public class NewsController implements RecommendConstant {
         if(type == 1){
             return new ModelAndView("/site/news-detail::.comment-list-holder");
         }
+
+        // 触发记录日志事件
+        if(hostHolder.getUser() != null){
+            Event event = new Event()
+                    .setTopic(TOPIC_ACTION)
+                    .setUserId(hostHolder.getUser().getId())
+                    .setEntityType(ENTITY_TYPE_NEWS)
+                    .setEntityId(news.getId())
+                    .setData("actionType", ACTION_TYPE_VIEW);
+            eventProducer.fireEvent(event);
+        }
+
         //作者
         User user = userService.findUserById(news.getUserId());
         model.addAttribute("user", user);
@@ -206,6 +231,20 @@ public class NewsController implements RecommendConstant {
         boolean hasFollowed = hostHolder.getUser() == null ? false :
                 followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, news.getUserId());
         model.addAttribute("hasFollowed", hasFollowed);
+
+        // 记录浏览数
+        dataService.recordUV(newsId, request.getRemoteHost());
+        // 浏览数
+        model.addAttribute("viewCount",  dataService.getViewCount(news.getId(), news.getClickCount()));
+        // 分类名
+        model.addAttribute("category", categoryName[news.getCategoryId()]);
+        // 分类
+        model.addAttribute("categoryId", news.getCategoryId());
+
+        // 相似推荐
+        List<News> simNewsList = recommendService.contentBasedRecommend(newsId);
+        model.addAttribute("simNewsList", simNewsList);
+
         return new ModelAndView("/site/news-detail");
     }
 
@@ -231,91 +270,4 @@ public class NewsController implements RecommendConstant {
         }
         return replyVOList;
     }
-
-//    @RequestMapping(path = "/detail/{newsId}", method = RequestMethod.GET)
-//    public String getNews(@PathVariable("newsId") int newsId, Model model, Page page){
-//        //新闻
-//        News news = newsService.findNewsById(newsId);
-//        model.addAttribute("news", news);
-//        //作者
-//        User user = userService.findUserById(news.getUserId());
-//        model.addAttribute("user", user);
-//        //点赞信息
-//        long likeCount =  likeService.findEntityLikeCount(ENTITY_TYPE_NEWS, newsId);
-//        model.addAttribute("likeCount", likeCount);
-//        int likeStatus = hostHolder.getUser() == null ? 0 :
-//                likeService.findEntityLikeStatus(hostHolder.getUser().getId(), ENTITY_TYPE_NEWS, newsId);
-//        model.addAttribute("likeStatus", likeStatus);
-//        //收藏信息
-//        model.addAttribute("favoriteCount", favoriteService.findNewsFavoriteCount(newsId));
-//        model.addAttribute("favoriteStatus", hostHolder.getUser() == null ? false :
-//                favoriteService.findUserFavoriteStatus(hostHolder.getUser().getId(), newsId));
-//        //发布者关注信息
-//        model.addAttribute("followeeCount", followService.findFolloweeCount(news.getUserId(), ENTITY_TYPE_USER));
-//        model.addAttribute("followerCount", followService.findFollowerCount(ENTITY_TYPE_USER, news.getUserId()));
-//        boolean hasFollowed = hostHolder.getUser() == null ? false :
-//                followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, news.getUserId());
-//        model.addAttribute("hasFollowed", hasFollowed);
-//
-//        //评论分页信息
-//        page.setLimit(10);
-//        page.setPath("/news/detail/" + newsId);
-//        page.setRows(commentService.findCountByEntity(ENTITY_TYPE_NEWS, newsId));
-//        //评论列表
-//        List<Comment> commentsList = commentService.findCommentsByEntity(ENTITY_TYPE_NEWS, newsId, page.getOffset(), page.getLimit());
-//        //评论VO列表
-//        List<Map<String, Object>> commentVoList = new ArrayList<>();
-//        if(commentsList != null){
-//            for(Comment comment : commentsList){
-//                //评论VO
-//                Map<String, Object> commentVo = new HashMap<>();
-//                //评论
-//                commentVo.put("comment", comment);
-//                //作者
-//                commentVo.put("user", userService.findUserById(comment.getUserId()));
-//                //点赞信息
-//                likeCount =  likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, comment.getId());
-//                commentVo.put("likeCount", likeCount);
-//                likeStatus = hostHolder.getUser() == null ? 0 :
-//                        likeService.findEntityLikeStatus(hostHolder.getUser().getId(), ENTITY_TYPE_COMMENT, comment.getId());
-//                commentVo.put("likeStatus", likeStatus);
-//                //回复数量
-//                int replyCount = commentService.findCountByEntity(ENTITY_TYPE_COMMENT, comment.getId());
-//                //回复分页信息
-////                Page replyPage = new Page();
-////                replyPage.setRows(replyCount);
-////                replyPage.setPath("/news/detail/" + newsId);
-////                replyPage.setLimit(5);
-//                //回复列表
-//                List<Comment> replyList = commentService.findCommentsByEntity(ENTITY_TYPE_COMMENT, comment.getId(), 0, Integer.MAX_VALUE);
-//                //回复VO列表
-//                List<Map<String, Object>> replyVoList = new ArrayList<>();
-//                for(Comment reply : replyList){
-//                    //回复VO
-//                    Map<String, Object> replyVo = new HashMap<>();
-//                    //回复
-//                    replyVo.put("reply", reply);
-//                    //作者
-//                    replyVo.put("user", userService.findUserById(comment.getUserId()));
-//                    //点赞信息
-//                    likeCount =  likeService.findEntityLikeCount(ENTITY_TYPE_COMMENT, reply.getId());
-//                    replyVo.put("likeCount", likeCount);
-//                    likeStatus = hostHolder.getUser() == null ? 0 :
-//                            likeService.findEntityLikeStatus(hostHolder.getUser().getId(), ENTITY_TYPE_COMMENT, reply.getId());
-//                    replyVo.put("likeStatus", likeStatus);
-//                    //回复目标
-//                    User target = reply.getTargetId() == 0 ? null : userService.findUserById(reply.getTargetId());
-//                    replyVo.put("target", target);
-//                    replyVoList.add(replyVo);
-//                }
-////                commentVo.put("page", replyPage);
-//                commentVo.put("replies", replyVoList);
-//                commentVo.put("replyCount", replyCount);
-//                commentVoList.add(commentVo);
-//            }
-//            model.addAttribute("comments", commentVoList);
-//            return "/site/news-detail";
-//        }
-//        return "/site/news-detail";
-//    }
 }

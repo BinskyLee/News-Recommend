@@ -27,7 +27,7 @@
 						</a>
 						<div class="media-body">
 							<h6 class="mt-0 mb-3">
-								<a th:href="@{|/news/detail/${map.news.id}|}" th:utext="${map.news.title}"></a>
+								<a th:href="@{|/news/detail/${map.news.id}|}" target="_blank" th:utext="${map.news.title}"></a>
 							</h6>
 							<div class="mb-3" th:utext="${map.news.content}"></div>
 							<div class="text-muted font-size-12">

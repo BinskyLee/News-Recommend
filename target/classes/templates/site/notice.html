@@ -36,7 +36,7 @@
 						<!-- 通知列表 -->
 						<ul class="list-unstyled">
 							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
-								<span class="badge" th:if="${commentNotice!=null}" th:utext="${commentNotice.unread==0?'':commentNtoice.unread}" ></span>
+								<span class="badge" th:if="${commentNotice!=null}" th:utext="${commentNotice.unread==0?'':commentNotice.unread}" ></span>
 								<img th:src="@{/img/reply.png}" class="mr-4 user-header" alt="通知图标">
 								<div class="media-body conversation">
 									<h6 class="mt-1 mb-2">
@@ -55,7 +55,7 @@
 								</div>
 							</li>
 							<li class="media pb-3 pt-3 mb-3 border-bottom position-relative">
-								<span class="badge" th:if="${likeNotice!=null}" th:utext="${likeNotice.unread==0?'':likeNtoice.unread}">3</span>
+								<span class="badge" th:if="${likeNotice!=null}" th:utext="${likeNotice.unread==0?'':likeNotice.unread}">3</span>
 								<img th:src="@{/img/like.png}" class="mr-4 user-header" alt="通知图标">
 								<div class="media-body conversation">
 									<h6 class="mt-1 mb-2">

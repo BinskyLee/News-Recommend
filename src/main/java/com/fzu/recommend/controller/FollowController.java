@@ -126,7 +126,7 @@ public class FollowController implements RecommendConstant {
             map.put("followerCount", followService.findFollowerCount(user.getId(), ENTITY_TYPE_USER));
             map.put("hasFollowed", hostHolder.getUser() == null ? false :
                     followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, user.getId()));
-            map.put("newsCount", newsService.findNewsRows(user.getId()));
+            map.put("newsCount", newsService.findNewsRows(user.getId(), 0));
             list.add(map);
         }
         return list;
